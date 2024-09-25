@@ -1,4 +1,4 @@
-# Getting Started My Fetch App
+# Getting with Started My Fetch App
 
 ## Available Scripts
 
