@@ -49,3 +49,4 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## To Do
 
+1. Setup project to automatically run Prettier using Husky (Git hook)
