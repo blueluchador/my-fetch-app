@@ -1,4 +1,3 @@
-import React from "react";
 import { Pane, Text } from "evergreen-ui";
 
 export default function App() {
