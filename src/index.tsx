@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
+import { IntlProvider } from "react-intl";
 
 import App from "./components/App";
+import { messages } from "./locales";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <IntlProvider defaultLocale="en-US" locale="en-US" messages={messages["en-US"]}>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </IntlProvider>
   </React.StrictMode>,
 );
 
