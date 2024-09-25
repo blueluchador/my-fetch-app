@@ -1,4 +1,4 @@
-# Getting with Started My Fetch App
+# Getting Started with My Fetch App
 
 ## Available Scripts
 
@@ -15,7 +15,7 @@ You will also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-This runs the lint:fix script prior to running the tests.
+This runs `lint:fix` prior to starting the tests.
 
 ### `npm run lint`
 
