@@ -5,6 +5,7 @@
 ## To Do
 
 1. Setup project to automatically run Prettier using Husky (Git hook)
+1. Implemente XSS and CSRF to gaurd against attacks
 
 ## Available Scripts
 
