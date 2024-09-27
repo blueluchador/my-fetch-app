@@ -8,13 +8,8 @@ const Login: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleLogin = () => {
-    if (!name || !email) {
-      toaster.warning("Please fill in both fields");
-      return;
-    }
-    toaster.success(`Welcome, ${name}!`);
-    // You can add further login logic here (e.g., API calls).
+  const isValidEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
   };
 
   return (
@@ -47,7 +42,17 @@ const Login: React.FC = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         />
 
-        <Button appearance="primary" width="100%" onClick={handleLogin}>
+        <Button
+          appearance="primary"
+          disabled={!name || !isValidEmail(email)}
+          width="100%"
+          onClick={() => {
+            if (!name || !isValidEmail(email)) {
+              toaster.warning("Please fill in both fields with valid information");
+              return;
+            }
+            toaster.success(`Welcome, ${name}!`);
+          }}>
           <FormattedMessage id="LOGIN_BUTTON_TEXT" />
         </Button>
       </Pane>
