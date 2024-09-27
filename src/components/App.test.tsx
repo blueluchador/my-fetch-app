@@ -1,9 +1,18 @@
-import { render, screen } from "@testing-library/react";
+/** @jest-environment jsdom */
+
+import { messages } from "../locales";
+import { cleanup, screen, wrapper } from "../test-utils";
 
 import App from "./App";
 
-test.skip("skipped until wrapper util is added", () => {
-  render(<App></App>);
-  const linkElement = screen.getByText(/Hello, Fetch!/i);
-  expect(linkElement).toBeInTheDocument();
+afterEach(cleanup);
+
+describe("[components] <App />", () => {
+  const enUs = messages["en-US"];
+
+  it("renders the app", () => {
+    wrapper(<App />);
+
+    expect(screen.getByText(enUs.APP_NAME)).toBeInTheDocument();
+  });
 });
