@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+
+import { getIsAuthenticated } from "../redux/selectors";
+import { AppDispatch } from "../redux/store";
+import { fetchIsAuthenticated } from "../redux/thunks";
 
 import Layout from "./Layout";
 import { Favorites, Login, Search } from "./Pages";
 
 const App: React.FC = () => {
-  const isAuthenticated: boolean = false; // Replace with actual authentication logic
+  const dispatch: AppDispatch = useDispatch();
+
+  const isAuthenticated: boolean = useSelector(getIsAuthenticated);
+
+  useEffect(() => {
+    dispatch(fetchIsAuthenticated());
+  }, [dispatch]);
 
   return (
     <Router>

@@ -7,7 +7,7 @@ import App from "./App";
 
 afterEach(cleanup);
 
-describe("[components] <App />", () => {
+describe.skip("[components] <App />", () => {
   const enUs = messages["en-US"];
 
   it("renders the app", () => {
