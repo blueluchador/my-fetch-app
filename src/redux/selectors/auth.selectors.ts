@@ -1,3 +1,3 @@
 import { RootState } from "../store";
 
-export const getIsAuthenticated = (state: RootState): boolean => state.login.isAuthenticated;
+export const getIsAuthenticated = (state: RootState): boolean => state.authStatus.isAuthenticated;

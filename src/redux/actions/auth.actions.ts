@@ -1,10 +1,10 @@
-export const CHECK_IF_AUTHENTICATED = "CHECK_IF_AUTHENTICATED";
+export const CHECK_AUTH = "CHECK_AUTH";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 interface CheckIfAuthenticated {
-  type: typeof CHECK_IF_AUTHENTICATED;
+  type: typeof CHECK_AUTH;
   isAuthenticated: boolean;
 }
 
@@ -25,7 +25,7 @@ export type AuthActionTypes = CheckIfAuthenticated | LoginRequest | LoginSuccess
 
 export const checkIfAuthenticated = (isAuthenticated: boolean): CheckIfAuthenticated => ({
   isAuthenticated,
-  type: CHECK_IF_AUTHENTICATED,
+  type: CHECK_AUTH,
 });
 
 export const loginRequest = (): AuthActionTypes => ({

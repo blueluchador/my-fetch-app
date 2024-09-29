@@ -5,8 +5,12 @@ import { getIsAuthenticated } from "./auth.selectors";
 describe("getIsAuthenticated selector", () => {
   it("should return true when user is authenticated", () => {
     const mockState: RootState = {
-      login: {
+      authStatus: {
         isAuthenticated: true,
+      },
+      login: {
+        error: null,
+        loading: false,
       },
     };
 
@@ -16,8 +20,12 @@ describe("getIsAuthenticated selector", () => {
 
   it("should return false when user is not authenticated", () => {
     const mockState: RootState = {
-      login: {
+      authStatus: {
         isAuthenticated: false,
+      },
+      login: {
+        error: null,
+        loading: false,
       },
     };
 

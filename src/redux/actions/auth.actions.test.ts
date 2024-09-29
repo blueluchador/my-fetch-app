@@ -1,5 +1,5 @@
 import {
-  CHECK_IF_AUTHENTICATED,
+  CHECK_AUTH,
   checkIfAuthenticated,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
@@ -15,7 +15,7 @@ describe("checkIfAuthenticated action creator", () => {
 
     const expectedAction = {
       isAuthenticated,
-      type: CHECK_IF_AUTHENTICATED,
+      type: CHECK_AUTH,
     };
 
     const action = checkIfAuthenticated(isAuthenticated);
@@ -28,7 +28,7 @@ describe("checkIfAuthenticated action creator", () => {
 
     const expectedAction = {
       isAuthenticated,
-      type: CHECK_IF_AUTHENTICATED,
+      type: CHECK_AUTH,
     };
 
     const action = checkIfAuthenticated(isAuthenticated);
