@@ -21,8 +21,13 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
+Launches the test runner in the interactive watch mode.
+
+### `npm test:once`
+
+Runs the tests once.
+
 Launches the test runner in the interactive watch mode.\
-This runs `lint:fix` prior to starting the tests.
 
 ### `npm run lint`
 
@@ -32,9 +37,9 @@ Checks for linting issues in code.
 
 Fixes linting issues automatically.
 
-### `npm run format`
+### `lint-and-test`
 
-Formats the code with Prettier.
+Fixes linting issues before running the tests.
 
 ### `npm run build`
 
