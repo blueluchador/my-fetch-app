@@ -36,7 +36,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "simple-import-sort", "sort-keys", "react-hooks"],
+  "plugins": ["react", "@typescript-eslint", "simple-import-sort", "sort-keys", "react-hooks", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "indent": [
@@ -74,7 +74,8 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "prettier/prettier": "error"
   },
   "ignorePatterns": ["*.config.js"]
 }
