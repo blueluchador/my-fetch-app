@@ -32,7 +32,6 @@ export const login = (
 
       // Create user session.
       setUserSession(name);
-
     } catch (error) {
       dispatch(loginFailure((error as Error).message));
     }
