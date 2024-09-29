@@ -1,7 +1,14 @@
 import { ThunkAction } from "redux-thunk";
 
+import { loginApi } from "../../api";
 import { userSessionExists } from "../../utils";
-import { AuthActionTypes, checkIfAuthenticated } from "../actions";
+import {
+  AuthActionTypes,
+  checkIfAuthenticated,
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} from "../actions";
 import { RootState } from "../store";
 
 export const fetchIsAuthenticated = (): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
@@ -9,5 +16,23 @@ export const fetchIsAuthenticated = (): ThunkAction<void, RootState, unknown, Au
     const isAuthenticated: boolean = userSessionExists();
 
     dispatch(checkIfAuthenticated(isAuthenticated));
+  };
+};
+
+export const login = (
+  name: string,
+  email: string,
+): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
+  return async (dispatch) => {
+    dispatch(loginRequest());
+
+    try {
+      await loginApi(name, email);
+      dispatch(loginSuccess());
+
+      //todo: create auth cookie containing name.
+    } catch (error) {
+      dispatch(loginFailure((error as Error).message));
+    }
   };
 };
