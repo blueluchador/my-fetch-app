@@ -4,9 +4,9 @@ export function userSessionExists(): boolean {
   return document.cookie.split("; ").some((cookie) => cookie.startsWith(USER_SESSION_COOKIE_NAME));
 }
 
-export function setUserSession(value: string): void {
+export function setUserSession(name: string): void {
   const expirationTime = new Date(Date.now() + 3600 * 1000).toUTCString();
-  const cookieValue = `${USER_SESSION_COOKIE_NAME}${encodeURIComponent(value)}; expires=${expirationTime}; path=/;`;
+  const cookieValue = `${USER_SESSION_COOKIE_NAME}${encodeURIComponent(name)}; expires=${expirationTime}; path=/;`;
 
   document.cookie = cookieValue;
 }

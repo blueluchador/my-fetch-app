@@ -48,11 +48,11 @@ describe("setUserSession", () => {
     // Mock document.cookie setter
     const mockSetCookie = jest.spyOn(document, "cookie", "set").mockImplementation(() => {});
 
-    const sessionValue = "gerry";
-    setUserSession(sessionValue);
+    const name = "gerry";
+    setUserSession(name);
 
     const expectedExpirationTime = new Date(mockDateNow + 3600 * 1000).toUTCString();
-    const expectedCookie = `${USER_SESSION_COOKIE_NAME}${encodeURIComponent(sessionValue)}; expires=${expectedExpirationTime}; path=/;`;
+    const expectedCookie = `${USER_SESSION_COOKIE_NAME}${encodeURIComponent(name)}; expires=${expectedExpirationTime}; path=/;`;
 
     expect(mockSetCookie).toHaveBeenCalledWith(expectedCookie);
   });

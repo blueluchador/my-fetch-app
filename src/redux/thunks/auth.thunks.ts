@@ -1,7 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 
 import { loginApi } from "../../api";
-import { userSessionExists } from "../../utils";
+import { setUserSession, userSessionExists } from "../../utils";
 import {
   AuthActionTypes,
   checkIfAuthenticated,
@@ -30,7 +30,9 @@ export const login = (
       await loginApi(name, email);
       dispatch(loginSuccess());
 
-      //todo: create auth cookie containing name.
+      // Create user session.
+      setUserSession(name);
+
     } catch (error) {
       dispatch(loginFailure((error as Error).message));
     }
