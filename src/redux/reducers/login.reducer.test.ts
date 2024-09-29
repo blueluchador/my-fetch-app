@@ -1,10 +1,10 @@
-import { CHECK_IF_AUTHENTICATED, LoginActionTypes } from "../actions";
+import { AuthActionTypes, CHECK_IF_AUTHENTICATED } from "../actions";
 
 import { loginReducer } from "./login.reducer";
 
 describe("loginReducer", () => {
   it("should return the initial state when given an undefined state", () => {
-    const action: LoginActionTypes = { type: "UNKNOWN_ACTION" } as unknown as LoginActionTypes; // Use type assertion for an unknown action
+    const action: AuthActionTypes = { type: "UNKNOWN_ACTION" } as unknown as AuthActionTypes;
     const expectedState = {
       isAuthenticated: false,
     };
@@ -13,7 +13,7 @@ describe("loginReducer", () => {
   });
 
   it("should handle CHECK_IF_AUTHENTICATED action", () => {
-    const action: LoginActionTypes = {
+    const action: AuthActionTypes = {
       isAuthenticated: true,
       type: CHECK_IF_AUTHENTICATED,
     };
@@ -30,7 +30,7 @@ describe("loginReducer", () => {
       isAuthenticated: true, // Start with authenticated state
     };
 
-    const action: LoginActionTypes = {
+    const action: AuthActionTypes = {
       isAuthenticated: false,
       type: CHECK_IF_AUTHENTICATED,
     };
