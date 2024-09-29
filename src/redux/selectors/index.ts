@@ -1,1 +1,1 @@
-export * from "./login.selectors";
+export * from "./auth.selectors";

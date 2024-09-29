@@ -6,7 +6,7 @@
 
 import { combineReducers } from "@reduxjs/toolkit";
 
-import { loginReducer } from "./login.reducer";
+import { loginReducer } from "./auth.reducer";
 
 export const reducers = combineReducers({
   login: loginReducer,

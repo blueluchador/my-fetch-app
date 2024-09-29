@@ -1,1 +1,1 @@
-export * from "./login.thunks";
+export * from "./auth.thunks";

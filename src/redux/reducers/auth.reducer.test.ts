@@ -1,6 +1,6 @@
 import { AuthActionTypes, CHECK_IF_AUTHENTICATED } from "../actions";
 
-import { loginReducer } from "./login.reducer";
+import { loginReducer } from "./auth.reducer";
 
 describe("loginReducer", () => {
   it("should return the initial state when given an undefined state", () => {

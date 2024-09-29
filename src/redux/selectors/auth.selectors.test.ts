@@ -1,6 +1,6 @@
 import { RootState } from "../store";
 
-import { getIsAuthenticated } from "./login.selectors";
+import { getIsAuthenticated } from "./auth.selectors";
 
 describe("getIsAuthenticated selector", () => {
   it("should return true when user is authenticated", () => {
