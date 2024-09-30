@@ -22,9 +22,8 @@ interface LoginFailure {
   payload: string;
 }
 
-interface logoutRequest {
+interface LogoutRequest {
   type: typeof LOGOUT_REQUEST;
-  payload: string;
 }
 
 export type AuthActionTypes =
@@ -32,7 +31,7 @@ export type AuthActionTypes =
   | LoginRequest
   | LoginSuccess
   | LoginFailure
-  | LoginRequest;
+  | LogoutRequest;
 
 export const checkIfAuthenticated = (isAuthenticated: boolean): CheckIfAuthenticated => ({
   isAuthenticated,
