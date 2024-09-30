@@ -2,6 +2,7 @@
 export const enUsMessages = {
   APP_NAME: "My Fetch App",
   BACK_HOME_BUTTON_TEXT: "Go Back to Home",
+  FAVORITES_NAV_TEXT: "Favorites",
   FAVORITES_PAGE_HEADING: "Favorites",
   LOGIN_BUTTON_TEXT: "Login",
   LOGIN_EMAIL_LABEL: "Email",
@@ -13,5 +14,6 @@ export const enUsMessages = {
   LOGOUT_BUTTON_TEXT: "Logout",
   PAGE_NOT_FOUND_TEXT: "Oops! The page you are looking for does not exist.",
   PAGE_NOT_FOUND_TITLE: "404 - Page Not Found",
+  SEARCH_NAV_TEXT: "Search",
   SEARCH_PAGE_HEADING: "Search",
 };

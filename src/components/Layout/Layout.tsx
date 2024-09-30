@@ -35,12 +35,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Pane alignItems="center" display="flex">
           {/* Search Link */}
           <Link href="/search" style={{ marginRight: majorScale(2), textDecoration: "none" }}>
-            <Text fontWeight={500}>Search</Text>
+            <Text fontWeight={500}>
+              <FormattedMessage id="SEARCH_NAV_TEXT" />
+            </Text>
           </Link>
 
           {/* Favorites Link */}
           <Link href="/favorites" style={{ marginRight: majorScale(2), textDecoration: "none" }}>
-            <Text fontWeight={500}>Favorites</Text>
+            <Text fontWeight={500}>
+              <FormattedMessage id="FAVORITES_NAV_TEXT" />
+            </Text>
           </Link>
 
           {/* Logout Button */}
@@ -64,7 +68,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         justifyContent="center"
         padding={majorScale(2)}>
         <Text size={400}>
-          <span>© {new Date().getFullYear()} </span>
+          <span>&#169; {new Date().getFullYear()} </span>
           <FormattedMessage id="LOGOUT_BUTTON_TEXT" />. All rights reserved.
         </Text>
       </Pane>
