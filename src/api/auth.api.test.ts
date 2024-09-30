@@ -22,14 +22,11 @@ describe("loginApi", () => {
     await loginApi(name, email);
 
     expect(fetchMock).toHaveBeenCalledTimes(1); // Ensure fetch was called once
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://frontend-take-home-service.fetch.com/auth/login",
-      {
-        body: JSON.stringify({ email, name }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      },
-    );
+    expect(fetchMock).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      body: JSON.stringify({ email, name }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    });
   });
 
   it("should throw an error if the response is not ok", async () => {
@@ -58,13 +55,10 @@ describe("logoutApi", () => {
     await logoutApi();
 
     expect(fetchMock).toHaveBeenCalledTimes(1); // Ensure fetch was called once
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://frontend-take-home-service.fetch.com/auth/logout",
-      {
-        credentials: "include",
-        method: "POST",
-      },
-    );
+    expect(fetchMock).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+      credentials: "include",
+      method: "POST",
+    });
   });
 
   it("should throw an error if the response is not ok", async () => {
