@@ -1,6 +1,6 @@
 import { RootState } from "../store";
 
-import { getIsAuthenticated } from "./auth.selectors";
+import { getIsAuthenticated, isLoginLoading } from "./auth.selectors";
 
 describe("getIsAuthenticated selector", () => {
   it("should return true when user is authenticated", () => {
@@ -31,5 +31,35 @@ describe("getIsAuthenticated selector", () => {
 
     const result = getIsAuthenticated(mockState);
     expect(result).toBe(false);
+  });
+});
+
+describe("isLoginLoading selector", () => {
+  it("should return true when login loading is true", () => {
+    const mockState: RootState = {
+      authStatus: {
+        isAuthenticated: true,
+      },
+      login: {
+        error: null,
+        loading: true,
+      },
+    };
+
+    expect(isLoginLoading(mockState)).toBe(true);
+  });
+
+  it("should return false when login loading is false", () => {
+    const mockState: RootState = {
+      authStatus: {
+        isAuthenticated: true,
+      },
+      login: {
+        error: null,
+        loading: false,
+      },
+    };
+
+    expect(isLoginLoading(mockState)).toBe(false);
   });
 });
