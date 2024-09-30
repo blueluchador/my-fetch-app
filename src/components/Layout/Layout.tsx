@@ -1,6 +1,10 @@
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import { useDispatch } from "react-redux";
 import { Button, majorScale, Pane, Text } from "evergreen-ui";
+
+import { AppDispatch } from "../../redux";
+import { logout } from "../../redux/thunks";
 
 // Define types for props
 interface LayoutProps {
@@ -8,6 +12,12 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Pane display="flex" flexDirection="column" minHeight="100vh">
       {/* Top Navigation */}
@@ -21,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Text fontWeight={500} size={600}>
           <FormattedMessage id="APP_NAME" />
         </Text>
-        <Button appearance="primary">
+        <Button appearance="primary" onClick={handleLogout}>
           <FormattedMessage id="LOGOUT_BUTTON_TEXT" />
         </Button>
       </Pane>
