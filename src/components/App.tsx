@@ -8,11 +8,12 @@ import { fetchIsAuthenticated } from "../redux/thunks";
 
 import Layout from "./Layout";
 import { Favorites, Login, NotFound, Search } from "./Pages";
+import { Spinner } from "evergreen-ui";
 
 const App: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const isAuthenticated: boolean = useSelector(getIsAuthenticated);
+  const isAuthenticated: boolean | null = useSelector(getIsAuthenticated);
 
   useEffect(() => {
     dispatch(fetchIsAuthenticated());
@@ -22,6 +23,14 @@ const App: React.FC = () => {
     const location = useLocation();
     return <Navigate replace state={{ from: location }} to="/login" />;
   };
+
+  if (isAuthenticated === null) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <Router>

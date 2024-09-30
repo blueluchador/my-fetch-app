@@ -3,11 +3,11 @@ import { Reducer } from "@reduxjs/toolkit"; // Import Reducer type
 import { AuthActionTypes, CHECK_AUTH } from "../actions";
 
 interface AuthStatusState {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | null;
 }
 
 const initialState: AuthStatusState = {
-  isAuthenticated: false,
+  isAuthenticated: null,
 };
 
 export const authStatusReducer: Reducer<AuthStatusState, AuthActionTypes> = (

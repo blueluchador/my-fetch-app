@@ -6,7 +6,7 @@ describe("authStatusReducer", () => {
   it("should return the initial state when given an undefined state", () => {
     const action: AuthActionTypes = { type: "UNKNOWN_ACTION" } as unknown as AuthActionTypes;
     const expectedState = {
-      isAuthenticated: false,
+      isAuthenticated: null,
     };
 
     expect(authStatusReducer(undefined, action)).toEqual(expectedState);
