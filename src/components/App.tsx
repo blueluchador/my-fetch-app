@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Spinner } from "evergreen-ui";
 
 import { getIsAuthenticated } from "../redux/selectors";
 import { AppDispatch } from "../redux/store";
@@ -8,7 +9,6 @@ import { fetchIsAuthenticated } from "../redux/thunks";
 
 import Layout from "./Layout";
 import { Favorites, Login, NotFound, Search } from "./Pages";
-import { Spinner } from "evergreen-ui";
 
 const App: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -26,7 +26,13 @@ const App: React.FC = () => {
 
   if (isAuthenticated === null) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+        }}>
         <Spinner />
       </div>
     );
