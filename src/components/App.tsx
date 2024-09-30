@@ -20,7 +20,6 @@ const App: React.FC = () => {
 
   const RedirectToLogin = () => {
     const location = useLocation();
-    console.log(location);
     return <Navigate replace state={{ from: location }} to="/login" />;
   };
 
