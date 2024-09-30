@@ -1,4 +1,5 @@
 import {
+  deleteUserSession,
   getUserName,
   setUserSession,
   USER_SESSION_COOKIE_NAME,
@@ -81,5 +82,22 @@ describe("getUserName", () => {
     jest.spyOn(document, "cookie", "get").mockReturnValue("");
 
     expect(getUserName()).toBeNull();
+  });
+});
+
+describe("deleteUserSession", () => {
+  beforeEach(() => {
+    // Mock the document.cookie
+    Object.defineProperty(document, "cookie", {
+      value: "user_session=abc123; path=/;",
+      writable: true,
+    });
+  });
+
+  it("should delete the user_session cookie", () => {
+    deleteUserSession();
+
+    // Check if the cookie is removed by setting the expired date
+    expect(document.cookie).toContain("user_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC");
   });
 });
