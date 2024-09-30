@@ -69,7 +69,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         padding={majorScale(2)}>
         <Text size={400}>
           <span>&#169; {new Date().getFullYear()} </span>
-          <FormattedMessage id="LOGOUT_BUTTON_TEXT" />. All rights reserved.
+          <FormattedMessage id="APP_NAME" />. All rights reserved.
         </Text>
       </Pane>
     </Pane>

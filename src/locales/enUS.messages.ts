@@ -12,7 +12,7 @@ export const enUsMessages = {
   LOGIN_NAME_LABEL: "Name",
   LOGIN_NAME_PLACEHOLDER: "Enter your name",
   LOGOUT_BUTTON_TEXT: "Logout",
-  PAGE_NOT_FOUND_TEXT: "Oops! The page you are looking for does not exist.",
+  PAGE_NOT_FOUND_TEXT: "Oops! We can't find that page.",
   PAGE_NOT_FOUND_TITLE: "404 - Page Not Found",
   SEARCH_NAV_TEXT: "Search",
   SEARCH_PAGE_HEADING: "Search",
