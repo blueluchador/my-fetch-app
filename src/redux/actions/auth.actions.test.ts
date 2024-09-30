@@ -7,6 +7,8 @@ import {
   loginFailure,
   loginRequest,
   loginSuccess,
+  LOGOUT_REQUEST,
+  logoutRequest,
 } from "./auth.actions";
 
 describe("checkIfAuthenticated action creator", () => {
@@ -55,5 +57,10 @@ describe("Auth Actions", () => {
       type: LOGIN_FAILURE,
     };
     expect(loginFailure(error)).toEqual(expectedAction);
+  });
+
+  it("should create an action to request logout", () => {
+    const expectedAction = { type: LOGOUT_REQUEST };
+    expect(logoutRequest()).toEqual(expectedAction);
   });
 });

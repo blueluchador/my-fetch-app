@@ -2,6 +2,7 @@ export const CHECK_AUTH = "CHECK_AUTH";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 
 interface CheckIfAuthenticated {
   type: typeof CHECK_AUTH;
@@ -21,7 +22,17 @@ interface LoginFailure {
   payload: string;
 }
 
-export type AuthActionTypes = CheckIfAuthenticated | LoginRequest | LoginSuccess | LoginFailure;
+interface logoutRequest {
+  type: typeof LOGOUT_REQUEST;
+  payload: string;
+}
+
+export type AuthActionTypes =
+  | CheckIfAuthenticated
+  | LoginRequest
+  | LoginSuccess
+  | LoginFailure
+  | LoginRequest;
 
 export const checkIfAuthenticated = (isAuthenticated: boolean): CheckIfAuthenticated => ({
   isAuthenticated,
@@ -39,4 +50,8 @@ export const loginSuccess = (): AuthActionTypes => ({
 export const loginFailure = (error: string): AuthActionTypes => ({
   payload: error,
   type: LOGIN_FAILURE,
+});
+
+export const logoutRequest = (): AuthActionTypes => ({
+  type: LOGOUT_REQUEST,
 });
