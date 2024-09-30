@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Heading, Pane, TextInputField, toaster } from "evergreen-ui";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Heading, Pane, TextInputField } from "evergreen-ui";
+
+import { AppDispatch } from "../../redux";
+import { login } from "../../redux/thunks";
 
 const Login: React.FC = () => {
   const intl = useIntl();
@@ -10,6 +15,24 @@ const Login: React.FC = () => {
 
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location.state);
+  const from = location.state?.from?.pathname || "/";
+
+  const handleLogin = () => {
+    dispatch(login(name, email))
+      .then(() => {
+        console.log(from);
+        navigate(from, { replace: true });
+      })
+      .catch((error: any) => {
+        console.error("Login failed", error);
+      });
   };
 
   return (
@@ -46,13 +69,7 @@ const Login: React.FC = () => {
           appearance="primary"
           disabled={!name || !isValidEmail(email)}
           width="100%"
-          onClick={() => {
-            if (!name || !isValidEmail(email)) {
-              toaster.warning("Please fill in both fields with valid information");
-              return;
-            }
-            toaster.success(`Welcome, ${name}!`);
-          }}>
+          onClick={handleLogin}>
           <FormattedMessage id="LOGIN_BUTTON_TEXT" />
         </Button>
       </Pane>

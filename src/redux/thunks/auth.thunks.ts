@@ -22,16 +22,16 @@ export const fetchIsAuthenticated = (): ThunkAction<void, RootState, unknown, Au
 export const login = (
   name: string,
   email: string,
-): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
+): ThunkAction<Promise<void>, RootState, unknown, AuthActionTypes> => {
   return async (dispatch) => {
     dispatch(loginRequest());
 
     try {
+      setUserSession(name);
+      dispatch(checkIfAuthenticated(true));
+
       await loginApi(name, email);
       dispatch(loginSuccess());
-
-      // Create user session.
-      setUserSession(name);
     } catch (error) {
       dispatch(loginFailure((error as Error).message));
     }

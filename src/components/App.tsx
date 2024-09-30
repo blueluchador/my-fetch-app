@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import { getIsAuthenticated } from "../redux/selectors";
 import { AppDispatch } from "../redux/store";
@@ -17,6 +17,12 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(fetchIsAuthenticated());
   }, [dispatch]);
+
+  const RedirectToLogin = () => {
+    const location = useLocation();
+    console.log(location);
+    return <Navigate replace state={{ from: location }} to="/login" />;
+  };
 
   return (
     <Router>
@@ -35,7 +41,7 @@ const App: React.FC = () => {
                 <Search />
               </Layout>
             ) : (
-              <Navigate to="/login" />
+              <RedirectToLogin />
             )
           }
           path="/search"
@@ -47,7 +53,7 @@ const App: React.FC = () => {
                 <Favorites />
               </Layout>
             ) : (
-              <Navigate to="/login" />
+              <RedirectToLogin />
             )
           }
           path="/favorites"
