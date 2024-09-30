@@ -1,9 +1,9 @@
-import { FC } from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { Button, majorScale, Pane, Text } from "evergreen-ui";
 
-const NotFound: FC = () => (
+const NotFound: React.FC = () => (
   <Pane
     alignItems="center"
     background="tint2"
