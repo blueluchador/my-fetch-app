@@ -7,7 +7,7 @@ import { AppDispatch } from "../redux/store";
 import { fetchIsAuthenticated } from "../redux/thunks";
 
 import Layout from "./Layout";
-import { Favorites, Login, Search } from "./Pages";
+import { Favorites, Login, NotFound, Search } from "./Pages";
 
 const App: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -59,7 +59,7 @@ const App: React.FC = () => {
         />
 
         {/* Redirect all unmatched routes to Login */}
-        <Route element={<Navigate to="/login" />} path="*" />
+        <Route element={<NotFound />} path="*" />
       </Routes>
     </Router>
   );
