@@ -1,7 +1,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
-import { Button, majorScale, Pane, Text } from "evergreen-ui";
+import { Button, Heading, majorScale, Pane, Text } from "evergreen-ui";
 
 const NotFound: React.FC = () => (
   <Pane
@@ -12,9 +12,9 @@ const NotFound: React.FC = () => (
     height="100vh"
     justifyContent="center"
     padding={majorScale(4)}>
-    <Text fontWeight={600} marginBottom={majorScale(2)} size={900}>
+    <Heading marginBottom={majorScale(2)} size={900}>
       <FormattedMessage id="PAGE_NOT_FOUND_TITLE" />
-    </Text>
+    </Heading>
     <Text marginBottom={majorScale(4)} size={500}>
       <FormattedMessage id="PAGE_NOT_FOUND_TEXT" />
     </Text>
