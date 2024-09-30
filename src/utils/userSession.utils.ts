@@ -20,5 +20,5 @@ export function getUserName(): string | null {
 }
 
 export function deleteUserSession() {
-  document.cookie = "user_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = `${USER_SESSION_COOKIE_NAME}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
