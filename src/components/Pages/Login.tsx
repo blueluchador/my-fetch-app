@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Heading, Pane, TextInputField } from "evergreen-ui";
 
 import { AppDispatch } from "../../redux";
+import { isLoginLoading } from "../../redux/selectors";
 import { login } from "../../redux/thunks";
 
 const Login: React.FC = () => {
@@ -12,6 +13,8 @@ const Login: React.FC = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
+  const isLoading: boolean = useSelector(isLoginLoading);
 
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
@@ -21,13 +24,11 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location.state);
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = () => {
     dispatch(login(name, email))
       .then(() => {
-        console.log(from);
         navigate(from, { replace: true });
       })
       .catch((error: any) => {
@@ -70,7 +71,11 @@ const Login: React.FC = () => {
           disabled={!name || !isValidEmail(email)}
           width="100%"
           onClick={handleLogin}>
-          <FormattedMessage id="LOGIN_BUTTON_TEXT" />
+          {isLoading ? (
+            <FormattedMessage defaultMessage="Logging in..." id="LOGIN_LOADING_TEXT" />
+          ) : (
+            <FormattedMessage defaultMessage="Login" id="LOGIN_BUTTON_TEXT" />
+          )}
         </Button>
       </Pane>
     </Pane>
