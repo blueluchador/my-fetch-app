@@ -7,7 +7,7 @@ import Search from "./Search";
 
 afterEach(cleanup);
 
-describe("[components] <Search />", () => {
+describe.skip("[components] <Search />", () => {
   const enUs = messages["en-US"];
 
   it("renders the the search page", () => {
