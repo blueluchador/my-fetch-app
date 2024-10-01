@@ -21,3 +21,18 @@ export const dogSearchApi = async (breeds?: string[]): Promise<Dog[]> => {
   const data: Dog[] = await response.json();
   return data;
 };
+
+export const dogBreedsApi = async (): Promise<string[]> => {
+  const response = await fetch(`${baseUrl}/dogs/breeds`, {
+    credentials: "include",
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Get dog breeds failed");
+  }
+
+  // Parse the response to return Dog[]
+  const data: string[] = await response.json();
+  return data;
+};

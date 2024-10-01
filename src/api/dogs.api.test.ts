@@ -1,9 +1,12 @@
 import { Dog } from "../models";
-import { dogSearchApi } from "./dogs.api";
+
+import { dogBreedsApi, dogSearchApi } from "./dogs.api";
 
 global.fetch = jest.fn();
 
 describe("dogSearchApi", () => {
+  const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-service.fetch.com";
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -39,13 +42,10 @@ describe("dogSearchApi", () => {
 
     // Assertions
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(
-      "https://frontend-take-home-service.fetch.com/dogs/search?breed=Labrador&breed=Poodle",
-      {
-        credentials: "include",
-        method: "GET",
-      },
-    );
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/search?breed=Labrador&breed=Poodle`, {
+      credentials: "include",
+      method: "GET",
+    });
     expect(result).toEqual(mockDogs);
   });
 
@@ -59,12 +59,46 @@ describe("dogSearchApi", () => {
 
     // Ensure fetch was called correctly
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(
-      "https://frontend-take-home-service.fetch.com/dogs/search?breed=Labrador",
-      {
-        credentials: "include",
-        method: "GET",
-      },
-    );
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/search?breed=Labrador`, {
+      credentials: "include",
+      method: "GET",
+    });
+  });
+});
+
+describe("dogBreedsApi", () => {
+  const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-service.fetch.com";
+
+  beforeEach(() => {
+    // Clear mocks before each test
+    jest.clearAllMocks();
+  });
+
+  it("should return an array of dog breeds on success", async () => {
+    const mockBreeds = ["Labrador", "Beagle", "Poodle"];
+
+    // Mock the global fetch function
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockBreeds),
+      ok: true,
+    });
+
+    const breeds = await dogBreedsApi();
+
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/breeds`, {
+      credentials: "include",
+      method: "GET",
+    });
+
+    expect(breeds).toEqual(mockBreeds);
+  });
+
+  it("should throw an error when the API request fails", async () => {
+    // Mock a failed fetch request
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+    });
+
+    await expect(dogBreedsApi()).rejects.toThrow("Get dog breeds failed");
   });
 });
