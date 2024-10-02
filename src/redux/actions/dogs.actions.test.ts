@@ -23,12 +23,12 @@ import {
   matchDogSuccess,
   REMOVE_FROM_FAVORITES,
   removeFromFavorites,
-  searcgDogsSuccess,
   SEARCH_DOGS_FAILURE,
   SEARCH_DOGS_REQUEST,
   SEARCH_DOGS_SUCCESS,
   searchDogsFailure,
   searchDogsRequest,
+  searchDogsSuccess,
 } from "./dogs.actions";
 
 describe("Dog actions", () => {
@@ -71,7 +71,7 @@ describe("Dog actions", () => {
       payload: result,
       type: SEARCH_DOGS_SUCCESS,
     };
-    expect(searcgDogsSuccess(result)).toEqual(expectedAction);
+    expect(searchDogsSuccess(result)).toEqual(expectedAction);
   });
 
   it("should create an action for search dogs failure", () => {
