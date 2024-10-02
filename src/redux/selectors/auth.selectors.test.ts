@@ -8,6 +8,11 @@ describe("getIsAuthenticated selector", () => {
       authStatus: {
         isAuthenticated: true,
       },
+      dogBreeds: {
+        breeds: [],
+        error: null,
+        loading: false,
+      },
       login: {
         error: null,
         loading: false,
@@ -22,6 +27,11 @@ describe("getIsAuthenticated selector", () => {
     const mockState: RootState = {
       authStatus: {
         isAuthenticated: false,
+      },
+      dogBreeds: {
+        breeds: [],
+        error: null,
+        loading: false,
       },
       login: {
         error: null,
@@ -40,6 +50,11 @@ describe("isLoginLoading selector", () => {
       authStatus: {
         isAuthenticated: true,
       },
+      dogBreeds: {
+        breeds: [],
+        error: null,
+        loading: false,
+      },
       login: {
         error: null,
         loading: true,
@@ -53,6 +68,11 @@ describe("isLoginLoading selector", () => {
     const mockState: RootState = {
       authStatus: {
         isAuthenticated: true,
+      },
+      dogBreeds: {
+        breeds: [],
+        error: null,
+        loading: false,
       },
       login: {
         error: null,
