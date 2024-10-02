@@ -3,6 +3,7 @@ const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-ser
 export const loginApi = async (name: string, email: string): Promise<void> => {
   const response = await fetch(`${baseUrl}/auth/login`, {
     body: JSON.stringify({ email, name }),
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     method: "POST",
   });
