@@ -119,7 +119,7 @@ export const searchDogsRequest = (): SearchDogsRequest => ({
   type: SEARCH_DOGS_REQUEST,
 });
 
-export const searcgDogsSuccess = (result: SearchResult): SearchDogsSuccess => ({
+export const searchDogsSuccess = (result: SearchResult): SearchDogsSuccess => ({
   payload: result,
   type: SEARCH_DOGS_SUCCESS,
 });
