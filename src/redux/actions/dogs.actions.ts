@@ -85,7 +85,7 @@ interface MatchDogFailure {
   error: string;
 }
 
-export type DogActionTypes =
+export type DogsActionTypes =
   | FetchDogBreedsSuccess
   | FetchDogBreedsSuccess
   | FetchDogBreedsFailure
