@@ -54,7 +54,7 @@ export const fetchDogsApi = async (dogs: string[]): Promise<Dog[]> => {
   return data;
 };
 
-export const dogsMatchApi = async (dogs: string[]): Promise<DogMatch> => {
+export const dogMatchApi = async (dogs: string[]): Promise<DogMatch> => {
   const response = await fetch(`${baseUrl}/dogs/match`, {
     body: JSON.stringify(dogs),
     credentials: "include",

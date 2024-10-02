@@ -1,6 +1,6 @@
 import { Dog, DogMatch, SearchResult } from "../models";
 
-import { dogBreedsApi, dogSearchApi, dogsMatchApi, fetchDogsApi } from "./dogs.api";
+import { dogBreedsApi, dogMatchApi, dogSearchApi, fetchDogsApi } from "./dogs.api";
 
 const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-service.fetch.com";
 
@@ -75,7 +75,16 @@ describe("dogSearchApi", () => {
 
 describe("fetchDogsApi", () => {
   it("should fetch specific dogs by IDs and return an array of Dog objects", async () => {
-    const mockDogs: Dog[] = [{ breed: "Labrador", id: "1", name: "Buddy" }]; // Example Dog structure
+    const mockDogs: Dog[] = [
+      {
+        age: 0,
+        breed: "Labrador",
+        id: "1",
+        img: "",
+        name: "Buddy",
+        zip_code: "",
+      },
+    ]; // Example Dog structure
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue(mockDogs),
       ok: true,
@@ -100,15 +109,15 @@ describe("fetchDogsApi", () => {
   });
 });
 
-describe("dogsMatchApi", () => {
-  it("should fetch dog matches and return a DogMatch object", async () => {
-    const mockMatch: DogMatch = { match: { breed: "Labrador", id: "1", name: "Buddy" }, score: 95 };
+describe("dogMatchApi", () => {
+  it("should fetch dog matches and return a DogMatch object with match as a string", async () => {
+    const mockMatch: DogMatch = { match: "Labrador" }; // Adjusting to match the model
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue(mockMatch),
       ok: true,
     });
 
-    const match = await dogsMatchApi(["1"]);
+    const match = await dogMatchApi(["1"]);
     expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/match`, {
       body: JSON.stringify(["1"]),
       credentials: "include",
@@ -123,6 +132,6 @@ describe("dogsMatchApi", () => {
       ok: false,
     });
 
-    await expect(dogsMatchApi(["1"])).rejects.toThrow("Failed to fetch dogs");
+    await expect(dogMatchApi(["1"])).rejects.toThrow("Failed to fetch dogs");
   });
 });
