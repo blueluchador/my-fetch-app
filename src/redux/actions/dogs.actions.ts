@@ -86,7 +86,7 @@ interface MatchDogFailure {
 }
 
 export type DogsActionTypes =
-  | FetchDogBreedsSuccess
+  | FetchDogBreedsRequest
   | FetchDogBreedsSuccess
   | FetchDogBreedsFailure
   | SearchDogsRequest
