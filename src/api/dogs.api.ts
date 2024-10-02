@@ -2,7 +2,7 @@ import { Dog, DogMatch, SearchResult } from "../models";
 
 const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-service.fetch.com";
 
-export const dogBreedsApi = async (): Promise<string[]> => {
+export const fetchDogBreedsApi = async (): Promise<string[]> => {
   const response = await fetch(`${baseUrl}/dogs/breeds`, {
     credentials: "include",
     method: "GET",

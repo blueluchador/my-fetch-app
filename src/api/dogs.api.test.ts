@@ -1,6 +1,6 @@
 import { Dog, DogMatch, SearchResult } from "../models";
 
-import { dogBreedsApi, dogMatchApi, dogSearchApi, fetchDogsApi } from "./dogs.api";
+import { dogMatchApi, dogSearchApi, fetchDogBreedsApi, fetchDogsApi } from "./dogs.api";
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
@@ -22,7 +22,7 @@ describe("API functions", () => {
       ok: true,
     });
 
-    const result = await dogBreedsApi();
+    const result = await fetchDogBreedsApi();
     expect(result).toEqual(mockBreeds);
     expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs/breeds`, {
       credentials: "include",
@@ -35,7 +35,7 @@ describe("API functions", () => {
       ok: false,
     });
 
-    await expect(dogBreedsApi()).rejects.toThrow("Get dog breeds failed");
+    await expect(fetchDogBreedsApi()).rejects.toThrow("Get dog breeds failed");
   });
 
   it("should search dogs successfully with no breed filter", async () => {
