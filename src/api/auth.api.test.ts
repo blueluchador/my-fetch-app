@@ -24,6 +24,7 @@ describe("loginApi", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1); // Ensure fetch was called once
     expect(fetchMock).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/auth/login`, {
       body: JSON.stringify({ email, name }),
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });

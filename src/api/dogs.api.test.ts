@@ -38,7 +38,7 @@ describe("API functions", () => {
     await expect(fetchDogBreedsApi()).rejects.toThrow("Get dog breeds failed");
   });
 
-  it("should search dogs successfully with no breed filter", async () => {
+  it("should search dogs successfully with no breed filter and no sort parameter", async () => {
     const mockSearchResult: SearchResult = {
       next: "nextPageUrl",
       prev: "prevPageUrl",
@@ -58,7 +58,7 @@ describe("API functions", () => {
     });
   });
 
-  it("should search dogs successfully with breed filter", async () => {
+  it("should search dogs successfully with breed filter and no sort parameter", async () => {
     const mockSearchResult: SearchResult = {
       next: "nextPageUrl",
       prev: "prevPageUrl",
@@ -80,6 +80,52 @@ describe("API functions", () => {
         method: "GET",
       },
     );
+  });
+
+  it("should search dogs successfully with breed filter and sort parameter", async () => {
+    const mockSearchResult: SearchResult = {
+      next: "nextPageUrl",
+      prev: "prevPageUrl",
+      resultIds: ["dog1", "dog2"],
+      size: 2,
+    };
+    const breeds = ["Labrador"];
+    const sort = "age";
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockSearchResult),
+      ok: true,
+    });
+
+    const result = await dogSearchApi(breeds, sort);
+    expect(result).toEqual(mockSearchResult);
+    expect(fetch).toHaveBeenCalledWith(
+      `${process.env.REACT_APP_API_URL}/dogs/search?breed=Labrador&sort=age`,
+      {
+        credentials: "include",
+        method: "GET",
+      },
+    );
+  });
+
+  it("should search dogs successfully with sort parameter and no breed filter", async () => {
+    const mockSearchResult: SearchResult = {
+      next: "nextPageUrl",
+      prev: "prevPageUrl",
+      resultIds: ["dog1", "dog2"],
+      size: 2,
+    };
+    const sort = "name";
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockSearchResult),
+      ok: true,
+    });
+
+    const result = await dogSearchApi(undefined, sort);
+    expect(result).toEqual(mockSearchResult);
+    expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs/search?sort=name`, {
+      credentials: "include",
+      method: "GET",
+    });
   });
 
   it("should throw an error when dog search fails", async () => {
