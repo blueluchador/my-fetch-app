@@ -2,136 +2,162 @@ import { Dog, DogMatch, SearchResult } from "../models";
 
 import { dogBreedsApi, dogMatchApi, dogSearchApi, fetchDogsApi } from "./dogs.api";
 
-const baseUrl = process.env.REACT_APP_API_URL || "https://frontend-take-home-service.fetch.com";
+// Mocking the global fetch function
+global.fetch = jest.fn();
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+describe("API functions", () => {
+  beforeAll(() => {
+    // Mock the environment variable
+    process.env.REACT_APP_API_URL = "https://frontend-take-home-service.fetch.com";
+  });
 
-describe("dogBreedsApi", () => {
-  it("should fetch dog breeds and return an array of strings", async () => {
-    const mockBreeds = ["Labrador", "Golden Retriever"];
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockBreeds),
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should fetch dog breeds successfully", async () => {
+    const mockBreeds = ["Labrador", "Poodle"];
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockBreeds),
       ok: true,
     });
 
-    const breeds = await dogBreedsApi();
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/breeds`, {
+    const result = await dogBreedsApi();
+    expect(result).toEqual(mockBreeds);
+    expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs/breeds`, {
       credentials: "include",
       method: "GET",
     });
-    expect(breeds).toEqual(mockBreeds);
   });
 
-  it("should throw an error if fetching breeds fails", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
+  it("should throw an error when fetching dog breeds fails", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
     });
 
     await expect(dogBreedsApi()).rejects.toThrow("Get dog breeds failed");
   });
-});
 
-describe("dogSearchApi", () => {
-  it("should fetch dog search results and return SearchResult", async () => {
-    const mockSearchResult: SearchResult = { dogs: [], total: 2 }; // Example structure
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockSearchResult),
+  it("should search dogs successfully with no breed filter", async () => {
+    const mockSearchResult: SearchResult = {
+      next: "nextPageUrl",
+      prev: "prevPageUrl",
+      resultIds: ["dog1", "dog2"],
+      size: 2,
+    };
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockSearchResult),
       ok: true,
     });
 
-    const searchResult = await dogSearchApi(["Labrador"]);
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/search?breed=Labrador`, {
+    const result = await dogSearchApi();
+    expect(result).toEqual(mockSearchResult);
+    expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs/search`, {
       credentials: "include",
       method: "GET",
     });
-    expect(searchResult).toEqual(mockSearchResult);
   });
 
-  it("should throw an error if search fails", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
+  it("should search dogs successfully with breed filter", async () => {
+    const mockSearchResult: SearchResult = {
+      next: "nextPageUrl",
+      prev: "prevPageUrl",
+      resultIds: ["dog1", "dog2"],
+      size: 2,
+    };
+    const breeds = ["Labrador"];
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockSearchResult),
+      ok: true,
+    });
+
+    const result = await dogSearchApi(breeds);
+    expect(result).toEqual(mockSearchResult);
+    expect(fetch).toHaveBeenCalledWith(
+      `${process.env.REACT_APP_API_URL}/dogs/search?breed=Labrador`,
+      {
+        credentials: "include",
+        method: "GET",
+      },
+    );
+  });
+
+  it("should throw an error when dog search fails", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
     });
 
-    await expect(dogSearchApi(["Labrador"])).rejects.toThrow("Search failed");
+    await expect(dogSearchApi()).rejects.toThrow("Search failed");
   });
 
-  it("should handle empty breed array and return SearchResult", async () => {
-    const mockSearchResult: SearchResult = { dogs: [], total: 0 };
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockSearchResult),
-      ok: true,
-    });
-
-    const searchResult = await dogSearchApi();
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/search`, {
-      credentials: "include",
-      method: "GET",
-    });
-    expect(searchResult).toEqual(mockSearchResult);
-  });
-});
-
-describe("fetchDogsApi", () => {
-  it("should fetch specific dogs by IDs and return an array of Dog objects", async () => {
+  it("should fetch dogs successfully", async () => {
     const mockDogs: Dog[] = [
       {
-        age: 0,
+        age: 3,
         breed: "Labrador",
-        id: "1",
-        img: "",
+        id: "dog1",
+        img: "dog1.jpg",
         name: "Buddy",
-        zip_code: "",
+        zip_code: "12345",
       },
-    ]; // Example Dog structure
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockDogs),
+      {
+        age: 5,
+        breed: "Poodle",
+        id: "dog2",
+        img: "dog2.jpg",
+        name: "Charlie",
+        zip_code: "54321",
+      },
+    ];
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockDogs),
       ok: true,
     });
 
-    const dogs = await fetchDogsApi(["1"]);
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs`, {
-      body: JSON.stringify(["1"]),
+    const dogIds = ["dog1", "dog2"];
+    const result = await fetchDogsApi(dogIds);
+    expect(result).toEqual(mockDogs);
+    expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs`, {
+      body: JSON.stringify(dogIds),
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });
-    expect(dogs).toEqual(mockDogs);
   });
 
-  it("should throw an error if fetching dogs fails", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
+  it("should throw an error when fetching dogs fails", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
     });
 
-    await expect(fetchDogsApi(["1"])).rejects.toThrow("Failed to fetch dogs");
+    const dogIds = ["dog1", "dog2"];
+    await expect(fetchDogsApi(dogIds)).rejects.toThrow("Failed to fetch dogs");
   });
-});
 
-describe("dogMatchApi", () => {
-  it("should fetch dog matches and return a DogMatch object with match as a string", async () => {
-    const mockMatch: DogMatch = { match: "Labrador" }; // Adjusting to match the model
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(mockMatch),
+  it("should match dogs successfully", async () => {
+    const mockMatch: DogMatch = { match: "Labrador" };
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockMatch),
       ok: true,
     });
 
-    const match = await dogMatchApi(["1"]);
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/dogs/match`, {
-      body: JSON.stringify(["1"]),
+    const dogIds = ["dog1", "dog2"];
+    const result = await dogMatchApi(dogIds);
+    expect(result).toEqual(mockMatch);
+    expect(fetch).toHaveBeenCalledWith(`${process.env.REACT_APP_API_URL}/dogs/match`, {
+      body: JSON.stringify(dogIds),
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });
-    expect(match).toEqual(mockMatch);
   });
 
-  it("should throw an error if fetching matches fails", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
+  it("should throw an error when dog matching fails", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
     });
 
-    await expect(dogMatchApi(["1"])).rejects.toThrow("Failed to fetch dogs");
+    const dogIds = ["dog1", "dog2"];
+    await expect(dogMatchApi(dogIds)).rejects.toThrow("Failed to fetch dogs");
   });
 });
