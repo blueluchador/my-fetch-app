@@ -1,61 +1,11 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useSelector } from "react-redux";
 import { Card, Heading, Icon, Image, Pane, Text } from "evergreen-ui";
 import { HeartIcon } from "evergreen-ui"; // Import the Heart Icon
 
-// Define the Dog interface
-interface Dog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
-
-// Example dog data
-const dogs: Dog[] = [
-  {
-    age: 3,
-    breed: "Labrador",
-    id: "1",
-    img: "https://example.com/dog1.jpg",
-    name: "Buddy",
-    zip_code: "90210",
-  },
-  {
-    age: 5,
-    breed: "Golden Retriever",
-    id: "2",
-    img: "https://example.com/dog2.jpg",
-    name: "Max",
-    zip_code: "30301",
-  },
-  {
-    age: 2,
-    breed: "Beagle",
-    id: "3",
-    img: "https://example.com/dog3.jpg",
-    name: "Bella",
-    zip_code: "10001",
-  },
-  {
-    age: 4,
-    breed: "Poodle",
-    id: "4",
-    img: "https://example.com/dog4.jpg",
-    name: "Charlie",
-    zip_code: "60601",
-  },
-  {
-    age: 6,
-    breed: "Bulldog",
-    id: "5",
-    img: "https://example.com/dog5.jpg",
-    name: "Lucy",
-    zip_code: "94105",
-  },
-];
+import { Dog } from "../../models";
+import { getFavoriteDogs } from "../../redux/selectors";
 
 // DogCard component that accepts a Dog object as a prop
 const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => (
@@ -90,19 +40,24 @@ const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => (
 );
 
 // DogGrid component that maps over the dog data and displays it in a grid
-const DogGrid: React.FC = () => (
-  <Pane
-    display="grid"
-    gridGap={16}
-    gridTemplateColumns="repeat(3, 1fr)"
-    justifyContent="center"
-    padding={24}>
-    {dogs.map((dog) => (
-      <DogCard key={dog.id} dog={dog} />
-    ))}
-  </Pane>
-);
+const DogGrid: React.FC = () => {
+  const dogs: Dog[] = useSelector(getFavoriteDogs);
 
+  return (
+    <Pane
+      display="grid"
+      gridGap={16}
+      gridTemplateColumns="repeat(3, 1fr)"
+      justifyContent="center"
+      padding={24}>
+      {dogs.map((dog) => (
+        <DogCard key={dog.id} dog={dog} />
+      ))}
+    </Pane>
+  );
+};
+
+// const dogs: Dog[] = useSelector(getFavoriteDogs);
 const Favorites: React.FC = () => (
   <Pane margin="auto" width={800}>
     <Heading size={800}>

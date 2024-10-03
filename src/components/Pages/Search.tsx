@@ -16,7 +16,14 @@ import {
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
-import { getDogBreeds, getDogs, getDogsLoading, getNumSearchResults } from "../../redux/selectors";
+import { addToFavorites, removeFromFavorites } from "../../redux/actions";
+import {
+  getDogBreeds,
+  getDogs,
+  getDogsLoading,
+  getFavoriteDogs,
+  getNumSearchResults,
+} from "../../redux/selectors";
 import { fetchDogBreeds, searchDogs } from "../../redux/thunks/dogs.thunks";
 
 const Search: React.FC = () => {
@@ -26,6 +33,7 @@ const Search: React.FC = () => {
   const numSearchResults = useSelector(getNumSearchResults);
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
+  const favoriteDogs: Dog[] = useSelector(getFavoriteDogs);
 
   const [breedFilter, setBreedFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,6 +41,8 @@ const Search: React.FC = () => {
 
   const dogsPerPage = 25;
   const totalPages = (): number => Math.ceil(numSearchResults / dogsPerPage);
+
+  const dogExists = (id: string): boolean => favoriteDogs.some((dog) => dog.id === id);
 
   useEffect(() => {
     dispatch(fetchDogBreeds());
@@ -56,8 +66,16 @@ const Search: React.FC = () => {
   } as Record<string, "breed:asc" | "breed:desc" | "age:asc">;
 
   const handleSortOrderChange = (selected: string) => {
-    // Change the state
     setSortOrder(reverseSortOrderMap[selected]);
+  };
+
+  const handleFavoriteClicked = (id: string) => {
+    if (dogExists(id)) {
+      dispatch(removeFromFavorites(id));
+    } else {
+      const dog: Dog = dogData.find((d) => d.id === id)!;
+      dispatch(addToFavorites(dog));
+    }
   };
 
   const handlePageChange = (page: number) => {
@@ -133,7 +151,12 @@ const Search: React.FC = () => {
                 <Table.TextCell>{dog.age}</Table.TextCell>
                 <Table.TextCell>{dog.zip_code}</Table.TextCell>
                 <Table.TextCell>
-                  <HeartIcon color="disabled" cursor="pointer" size={18} />
+                  <HeartIcon
+                    color={dogExists(dog.id) ? "danger" : "disabled"}
+                    cursor="pointer"
+                    size={18}
+                    onClick={() => handleFavoriteClicked(dog.id)}
+                  />
                 </Table.TextCell>
               </Table.Row>
             ))

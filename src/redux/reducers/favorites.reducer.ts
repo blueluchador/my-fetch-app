@@ -24,7 +24,6 @@ export const favoritesReducer: Reducer<FavoritesState, FavoritesActionTypes> = (
     case REMOVE_FROM_FAVORITES:
       return {
         ...state,
-        ...state,
         dogs: state.dogs.filter((dog) => dog.id !== action.dogId),
       };
     default:

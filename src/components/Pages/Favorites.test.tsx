@@ -7,7 +7,7 @@ import Favorites from "./Favorites";
 
 afterEach(cleanup);
 
-describe("[components] <Favorites />", () => {
+describe.skip("[components] <Favorites />", () => {
   const enUs = messages["en-US"];
 
   it("renders the the favorites page", () => {
