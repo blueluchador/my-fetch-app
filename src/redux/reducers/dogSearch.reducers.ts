@@ -38,7 +38,6 @@ export const dogSearchReducer: Reducer<DogSearchState, DogsActionTypes> = (
     case SEARCH_DOGS_SUCCESS:
       return {
         ...state,
-        //   breeds: action.payload,
         error: null,
         loading: false,
         search: {

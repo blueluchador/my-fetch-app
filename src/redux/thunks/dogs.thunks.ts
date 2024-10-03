@@ -9,7 +9,7 @@ import {
   fetchDogBreedsRequest,
   fetchDogBreedsSuccess,
   fetchDogsFailure,
-  //fetchDogsRequest,
+  fetchDogsRequest,
   fetchDogsSuccess,
   searchDogsFailure,
   searchDogsRequest,
@@ -48,8 +48,7 @@ export const searchDogs = (
       dispatch(searchDogsSuccess(result));
 
       // Fetch dogs
-      // TODO: Why does the following not compile?
-      // dispatch(fetchDogsRequest());
+      dispatch(fetchDogsRequest());
 
       try {
         const dogs: Dog[] = await fetchDogsApi(result.resultIds);
