@@ -36,7 +36,6 @@ export const dogSearchReducer: Reducer<DogSearchState, DogsActionTypes> = (
         loading: true,
       };
     case SEARCH_DOGS_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         error: null,

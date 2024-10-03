@@ -13,7 +13,7 @@ import {
 import { RootState } from "../store";
 
 export const fetchIsAuthenticated = (): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
-  return async (dispatch) => {
+  return (dispatch) => {
     const isAuthenticated: boolean = userSessionExists();
 
     dispatch(checkIfAuthenticated(isAuthenticated));
