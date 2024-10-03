@@ -8,50 +8,33 @@ import {
   Heading,
   Pagination,
   Pane,
+  Spinner,
   Table,
   TextInput,
 } from "evergreen-ui";
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
-import { getDogBreeds } from "../../redux/selectors";
-import { fetchDogBreeds } from "../../redux/thunks/dogs.thunks";
-
-// Example dog data (10 items)
-const dogData: Dog[] = [
-  { age: 2, breed: "Beagle", id: "1", img: "/dog1.jpg", name: "Buddy", zip_code: "90210" },
-  { age: 4, breed: "Labrador", id: "2", img: "/dog2.jpg", name: "Max", zip_code: "10001" },
-  { age: 3, breed: "Poodle", id: "3", img: "/dog3.jpg", name: "Charlie", zip_code: "30301" },
-  { age: 1, breed: "Bulldog", id: "4", img: "/dog4.jpg", name: "Bella", zip_code: "33101" },
-  { age: 5, breed: "Shih Tzu", id: "5", img: "/dog5.jpg", name: "Lucy", zip_code: "60601" },
-  { age: 6, breed: "Boxer", id: "6", img: "/dog6.jpg", name: "Rocky", zip_code: "70101" },
-  {
-    age: 7,
-    breed: "Golden Retriever",
-    id: "7",
-    img: "/dog7.jpg",
-    name: "Bailey",
-    zip_code: "80201",
-  },
-  { age: 4, breed: "Cocker Spaniel", id: "8", img: "/dog8.jpg", name: "Cooper", zip_code: "10001" },
-  { age: 3, breed: "Dachshund", id: "9", img: "/dog9.jpg", name: "Molly", zip_code: "90210" },
-  { age: 2, breed: "Chihuahua", id: "10", img: "/dog10.jpg", name: "Daisy", zip_code: "33101" },
-];
+import { getDogBreeds, getDogs, getDogsLoading } from "../../redux/selectors";
+import { fetchDogBreeds, searchDogs } from "../../redux/thunks/dogs.thunks";
 
 const Search: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const breeds: string[] = useSelector(getDogBreeds);
+  const dogsLoading = useSelector(getDogsLoading);
+  const dogData: Dog[] = useSelector(getDogs);
 
   useEffect(() => {
     dispatch(fetchDogBreeds());
+    dispatch(searchDogs());
   }, [dispatch]);
 
   const [filteredDogs, setFilteredDogs] = useState<Dog[]>(dogData);
   const [breedFilter, setBreedFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const dogsPerPage = 5;
+  const dogsPerPage = 25;
 
   useEffect(() => {
     const sortedDogs = [...dogData]
@@ -64,11 +47,25 @@ const Search: React.FC = () => {
         }
       });
     setFilteredDogs(sortedDogs);
-  }, [breedFilter, sortOrder]);
+  }, [breedFilter, dogData, sortOrder]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  if (dogsLoading) {
+    return (
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+        }}>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <Pane margin="auto" width={800}>
