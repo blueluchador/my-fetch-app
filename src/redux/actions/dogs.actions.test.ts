@@ -1,8 +1,6 @@
 import { Dog, DogMatch, SearchResult } from "../../models";
 
 import {
-  ADD_TO_FAVORITES,
-  addToFavorites,
   FETCH_DOG_BREEDS_FAILURE,
   FETCH_DOG_BREEDS_REQUEST,
   FETCH_DOG_BREEDS_SUCCESS,
@@ -21,8 +19,6 @@ import {
   matchDogFailure,
   matchDogsRequest,
   matchDogSuccess,
-  REMOVE_FROM_FAVORITES,
-  removeFromFavorites,
   SEARCH_DOGS_FAILURE,
   SEARCH_DOGS_REQUEST,
   SEARCH_DOGS_SUCCESS,
@@ -121,31 +117,6 @@ describe("Dog actions", () => {
       type: FETCH_DOGS_FAILURE,
     };
     expect(fetchDogsFailure(error)).toEqual(expectedAction);
-  });
-
-  it("should create an action to add a dog to favorites", () => {
-    const dog: Dog = {
-      age: 3,
-      breed: "Labrador",
-      id: "dog1",
-      img: "dog1.jpg",
-      name: "Buddy",
-      zip_code: "12345",
-    };
-    const expectedAction = {
-      dog,
-      type: ADD_TO_FAVORITES,
-    };
-    expect(addToFavorites(dog)).toEqual(expectedAction);
-  });
-
-  it("should create an action to remove a dog from favorites", () => {
-    const dogId = "dog1";
-    const expectedAction = {
-      dogId,
-      type: REMOVE_FROM_FAVORITES,
-    };
-    expect(removeFromFavorites(dogId)).toEqual(expectedAction);
   });
 
   it("should create an action to request matching a dog", () => {
