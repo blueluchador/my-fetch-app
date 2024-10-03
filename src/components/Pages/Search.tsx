@@ -64,20 +64,6 @@ const Search: React.FC = () => {
 
   const totalPages = (): number => Math.ceil(numSearchResults / dogsPerPage);
 
-  if (dogsLoading) {
-    return (
-      <div
-        style={{
-          alignItems: "center",
-          display: "flex",
-          height: "100vh",
-          justifyContent: "center",
-        }}>
-        <Spinner />
-      </div>
-    );
-  }
-
   return (
     <Pane margin="auto" width={800}>
       <Heading marginBottom={16} size={800}>
@@ -126,20 +112,32 @@ const Search: React.FC = () => {
           <Table.TextHeaderCell></Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
-          {dogData.map((dog) => (
-            <Table.Row key={dog.id}>
-              <Table.TextCell>
-                <Avatar name={dog.name} size={48} src={dog.img} />
-              </Table.TextCell>
-              <Table.TextCell>{dog.name}</Table.TextCell>
-              <Table.TextCell>{dog.breed}</Table.TextCell>
-              <Table.TextCell>{dog.age}</Table.TextCell>
-              <Table.TextCell>{dog.zip_code}</Table.TextCell>
-              <Table.TextCell>
-                <HeartIcon color="disabled" cursor="pointer" size={18} />
+          {dogsLoading ? (
+            // Display spinner inside the table body
+            <Table.Row>
+              <Table.TextCell gridColumn="1 / -1" textAlign="center">
+                <Pane alignItems="center" display="flex" justifyContent="center">
+                  <Spinner marginRight={8} size={24} />
+                  Fetching dogs...
+                </Pane>
               </Table.TextCell>
             </Table.Row>
-          ))}
+          ) : (
+            dogData.map((dog) => (
+              <Table.Row key={dog.id}>
+                <Table.TextCell>
+                  <Avatar name={dog.name} size={48} src={dog.img} />
+                </Table.TextCell>
+                <Table.TextCell>{dog.name}</Table.TextCell>
+                <Table.TextCell>{dog.breed}</Table.TextCell>
+                <Table.TextCell>{dog.age}</Table.TextCell>
+                <Table.TextCell>{dog.zip_code}</Table.TextCell>
+                <Table.TextCell>
+                  <HeartIcon color="disabled" cursor="pointer" size={18} />
+                </Table.TextCell>
+              </Table.Row>
+            ))
+          )}
         </Table.Body>
       </Table>
 
