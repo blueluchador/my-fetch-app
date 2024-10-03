@@ -1,12 +1,17 @@
 import { ThunkAction } from "redux-thunk";
 
-import { dogSearchApi, fetchDogBreedsApi } from "../../api";
+import { dogSearchApi, fetchDogBreedsApi, fetchDogsApi } from "../../api";
 import { SearchResult } from "../../models";
+import { Dog } from "../../models";
 import {
   DogsActionTypes,
   fetchDogBreedsFailure,
   fetchDogBreedsRequest,
   fetchDogBreedsSuccess,
+  fetchDogsFailure,
+  fetchDogsRequest,
+  //fetchDogsRequest,
+  fetchDogsSuccess,
   searchDogsFailure,
   searchDogsRequest,
   searchDogsSuccess,
@@ -20,7 +25,7 @@ export const fetchDogBreeds = (): ThunkAction<
   DogsActionTypes
 > => {
   return async (dispatch) => {
-    dispatch(fetchDogBreedsRequest);
+    dispatch(fetchDogBreedsRequest());
 
     try {
       const dogBreeds: string[] = await fetchDogBreedsApi();
@@ -36,11 +41,22 @@ export const searchDogs = (
   sort?: string,
 ): ThunkAction<Promise<void>, RootState, unknown, DogsActionTypes> => {
   return async (dispatch) => {
-    dispatch(searchDogsRequest);
+    // Search
+    dispatch(searchDogsRequest());
 
     try {
       const result: SearchResult = await dogSearchApi(breeds, sort);
       dispatch(searchDogsSuccess(result));
+
+      // Fetch dogs
+      dispatch(fetchDogsRequest);
+
+      try {
+        const dogs: Dog[] = await fetchDogsApi(result.resultIds);
+        dispatch(fetchDogsSuccess(dogs));
+      } catch (error) {
+        dispatch(fetchDogsFailure((error as Error).message));
+      }
     } catch (error) {
       dispatch(searchDogsFailure((error as Error).message));
     }

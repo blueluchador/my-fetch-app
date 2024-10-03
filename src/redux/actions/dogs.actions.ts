@@ -153,7 +153,7 @@ export const removeFromFavorites = (dogId: string): RemoveFromFavorites => ({
   type: REMOVE_FROM_FAVORITES,
 });
 
-export const matchDogsReques = (): MatchDogRequest => ({
+export const matchDogsRequest = (): MatchDogRequest => ({
   type: MATCH_DOG_REQUEST,
 });
 

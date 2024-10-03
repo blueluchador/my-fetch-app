@@ -19,7 +19,7 @@ import {
   MATCH_DOG_REQUEST,
   MATCH_DOG_SUCCESS,
   matchDogFailure,
-  matchDogsReques,
+  matchDogsRequest,
   matchDogSuccess,
   REMOVE_FROM_FAVORITES,
   removeFromFavorites,
@@ -150,7 +150,7 @@ describe("Dog actions", () => {
 
   it("should create an action to request matching a dog", () => {
     const expectedAction = { type: MATCH_DOG_REQUEST };
-    expect(matchDogsReques()).toEqual(expectedAction);
+    expect(matchDogsRequest()).toEqual(expectedAction);
   });
 
   it("should create an action for successfully matching a dog", () => {
