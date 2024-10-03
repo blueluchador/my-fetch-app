@@ -16,7 +16,6 @@ import {
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
-import { addToFavorites, removeFromFavorites } from "../../redux/actions";
 import {
   getDogBreeds,
   getDogs,
@@ -25,6 +24,11 @@ import {
   getNumSearchResults,
 } from "../../redux/selectors";
 import { fetchDogBreeds, searchDogs } from "../../redux/thunks/dogs.thunks";
+import {
+  addToFavorites,
+  loadFavorites,
+  removeFromFavorites,
+} from "../../redux/thunks/favorites.thunks";
 
 const Search: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -47,6 +51,10 @@ const Search: React.FC = () => {
   useEffect(() => {
     dispatch(fetchDogBreeds());
   }, []);
+
+  useEffect(() => {
+    dispatch(loadFavorites());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(searchDogs(breedFilter === "" ? undefined : [breedFilter], sortOrder));
@@ -171,12 +179,3 @@ const Search: React.FC = () => {
 };
 
 export default Search;
-
-//           {/* Favorites Icon (Heart) */}
-//           <Icon
-//             icon={favorites.includes(dog.id) ? 'heart' : 'heart-outline'}
-//             color={favorites.includes(dog.id) ? 'danger' : 'muted'}
-//             size={24}
-//             cursor="pointer"
-//             onClick={() => toggleFavorite(dog.id)}
-//           />

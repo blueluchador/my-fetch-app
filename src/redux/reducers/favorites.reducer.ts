@@ -1,7 +1,7 @@
 import { Reducer } from "react";
 
 import { Dog } from "../../models";
-import { ADD_TO_FAVORITES, FavoritesActionTypes, REMOVE_FROM_FAVORITES } from "../actions";
+import { FavoritesActionTypes, SET_FAVORITES } from "../actions";
 
 interface FavoritesState {
   dogs: Dog[];
@@ -16,15 +16,10 @@ export const favoritesReducer: Reducer<FavoritesState, FavoritesActionTypes> = (
   action,
 ) => {
   switch (action.type) {
-    case ADD_TO_FAVORITES:
+    case SET_FAVORITES:
       return {
         ...state,
-        dogs: [...state.dogs, action.dog],
-      };
-    case REMOVE_FROM_FAVORITES:
-      return {
-        ...state,
-        dogs: state.dogs.filter((dog) => dog.id !== action.dogId),
+        dogs: action.dogs,
       };
     default:
       return state;
