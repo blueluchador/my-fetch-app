@@ -1,6 +1,5 @@
-export interface SearchResult {
+export interface SearchType {
   next: string | null;
   prev: string | null;
-  resultIds: string[];
   size: number;
 }

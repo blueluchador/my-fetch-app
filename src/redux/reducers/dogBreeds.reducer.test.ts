@@ -3,7 +3,7 @@ import {
   FETCH_DOG_BREEDS_REQUEST,
   FETCH_DOG_BREEDS_SUCCESS,
   FETCH_DOGS_FAILURE,
-} from "../actions/dogs.actions";
+} from "../actions";
 
 import { dogBreedsReducer } from "./dogBreeds.reducer";
 
