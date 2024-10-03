@@ -96,10 +96,10 @@ export type DogsActionTypes =
   | FetchDogsSuccess
   | FetchDogsFailure
   | AddToFavorites
-  | RemoveFromFavorites
-  | MatchDogRequest
-  | MatchDogSuccess
-  | MatchDogFailure;
+  | RemoveFromFavorites;
+// | MatchDogRequest
+// | MatchDogSuccess
+// | MatchDogFailure;
 
 export const fetchDogBreedsRequest = (): FetchDogBreedsRequest => ({
   type: FETCH_DOG_BREEDS_REQUEST,
