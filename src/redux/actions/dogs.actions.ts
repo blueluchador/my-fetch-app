@@ -12,9 +12,6 @@ export const FETCH_DOG_BREEDS_REQUEST = "FETCH_DOG_BREEDS_REQUEST";
 export const FETCH_DOG_BREEDS_SUCCESS = "FETCH_DOG_BREEDS_SUCCESS";
 export const FETCH_DOG_BREEDS_FAILURE = "FETCH_DOG_BREEDS_FAILURE";
 
-export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
-export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
-
 export const MATCH_DOG_REQUEST = "MATCH_DOG_REQUEST";
 export const MATCH_DOG_SUCCESS = "MATCH_DOG_SUCCESS";
 export const MATCH_DOG_FAILURE = "MATCH_DOG_FAILURE";
@@ -61,16 +58,6 @@ interface FetchDogsFailure {
   error: string;
 }
 
-interface AddToFavorites {
-  type: typeof ADD_TO_FAVORITES;
-  dog: Dog;
-}
-
-interface RemoveFromFavorites {
-  type: typeof REMOVE_FROM_FAVORITES;
-  dogId: string;
-}
-
 interface MatchDogRequest {
   type: typeof MATCH_DOG_REQUEST;
 }
@@ -95,8 +82,6 @@ export type DogsActionTypes =
   | FetchDogsRequest
   | FetchDogsSuccess
   | FetchDogsFailure
-  | AddToFavorites
-  | RemoveFromFavorites
   | MatchDogRequest
   | MatchDogSuccess
   | MatchDogFailure;
@@ -141,16 +126,6 @@ export const fetchDogsSuccess = (dogs: Dog[]): FetchDogsSuccess => ({
 export const fetchDogsFailure = (error: string): FetchDogsFailure => ({
   error,
   type: FETCH_DOGS_FAILURE,
-});
-
-export const addToFavorites = (dog: Dog): AddToFavorites => ({
-  dog,
-  type: ADD_TO_FAVORITES,
-});
-
-export const removeFromFavorites = (dogId: string): RemoveFromFavorites => ({
-  dogId,
-  type: REMOVE_FROM_FAVORITES,
 });
 
 export const matchDogsRequest = (): MatchDogRequest => ({
