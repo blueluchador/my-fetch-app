@@ -65,7 +65,7 @@ describe("Dog actions", () => {
       next: "nextPageUrl",
       prev: "prevPageUrl",
       resultIds: ["dog1", "dog2"],
-      size: 2,
+      total: 2,
     };
     const expectedAction = {
       payload: result,

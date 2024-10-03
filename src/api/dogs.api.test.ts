@@ -43,7 +43,7 @@ describe("API functions", () => {
       next: "nextPageUrl",
       prev: "prevPageUrl",
       resultIds: ["dog1", "dog2"],
-      size: 2,
+      total: 2,
     };
     (fetch as jest.Mock).mockResolvedValueOnce({
       json: jest.fn().mockResolvedValueOnce(mockSearchResult),
@@ -63,7 +63,7 @@ describe("API functions", () => {
       next: "nextPageUrl",
       prev: "prevPageUrl",
       resultIds: ["dog1", "dog2"],
-      size: 2,
+      total: 2,
     };
     const breeds = ["Labrador"];
     (fetch as jest.Mock).mockResolvedValueOnce({
@@ -74,7 +74,7 @@ describe("API functions", () => {
     const result = await dogSearchApi(breeds);
     expect(result).toEqual(mockSearchResult);
     expect(fetch).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_URL}/dogs/search?breed=Labrador`,
+      `${process.env.REACT_APP_API_URL}/dogs/search?breeds=Labrador`,
       {
         credentials: "include",
         method: "GET",
@@ -87,7 +87,7 @@ describe("API functions", () => {
       next: "nextPageUrl",
       prev: "prevPageUrl",
       resultIds: ["dog1", "dog2"],
-      size: 2,
+      total: 2,
     };
     const breeds = ["Labrador"];
     const sort = "age";
@@ -99,7 +99,7 @@ describe("API functions", () => {
     const result = await dogSearchApi(breeds, sort);
     expect(result).toEqual(mockSearchResult);
     expect(fetch).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_URL}/dogs/search?breed=Labrador&sort=age`,
+      `${process.env.REACT_APP_API_URL}/dogs/search?breeds=Labrador&sort=age`,
       {
         credentials: "include",
         method: "GET",
@@ -112,7 +112,7 @@ describe("API functions", () => {
       next: "nextPageUrl",
       prev: "prevPageUrl",
       resultIds: ["dog1", "dog2"],
-      size: 2,
+      total: 2,
     };
     const sort = "name";
     (fetch as jest.Mock).mockResolvedValueOnce({

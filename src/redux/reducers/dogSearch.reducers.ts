@@ -20,7 +20,7 @@ const initialState: DogSearchState = {
   search: {
     next: null,
     prev: null,
-    size: 0,
+    total: 0,
   },
 };
 
@@ -36,6 +36,7 @@ export const dogSearchReducer: Reducer<DogSearchState, DogsActionTypes> = (
         loading: true,
       };
     case SEARCH_DOGS_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         error: null,
@@ -43,7 +44,7 @@ export const dogSearchReducer: Reducer<DogSearchState, DogsActionTypes> = (
         search: {
           next: action.payload.next,
           prev: action.payload.prev,
-          size: action.payload.size,
+          total: action.payload.total,
         },
       };
     case SEARCH_DOGS_FAILURE:

@@ -16,7 +16,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: null,
         prev: null,
-        size: 0,
+        total: 0,
       },
     };
 
@@ -34,7 +34,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: null,
         prev: null,
-        size: 0,
+        total: 0,
       },
     };
 
@@ -48,7 +48,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: null,
         prev: null,
-        size: 0,
+        total: 0,
       },
     };
 
@@ -57,7 +57,7 @@ describe("dogSearchReducer", () => {
         next: "next-page",
         prev: "prev-page",
         resultIds: [],
-        size: 50,
+        total: 50,
       },
       type: SEARCH_DOGS_SUCCESS,
     };
@@ -68,7 +68,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: "next-page",
         prev: "prev-page",
-        size: 50,
+        total: 50,
       },
     };
 
@@ -82,7 +82,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: null,
         prev: null,
-        size: 0,
+        total: 0,
       },
     };
 
@@ -97,7 +97,7 @@ describe("dogSearchReducer", () => {
       search: {
         next: null,
         prev: null,
-        size: 0,
+        total: 0,
       },
     };
 

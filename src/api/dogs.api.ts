@@ -20,7 +20,7 @@ export const fetchDogBreedsApi = async (): Promise<string[]> => {
 export const dogSearchApi = async (breeds?: string[], sort?: string): Promise<SearchResult> => {
   const breedQuery =
     breeds && breeds.length > 0
-      ? breeds.map((breed) => `breed=${encodeURIComponent(breed)}`).join("&")
+      ? breeds.map((breed) => `breeds=${encodeURIComponent(breed)}`).join("&")
       : "";
 
   const sortQuery = sort ? `sort=${encodeURIComponent(sort)}` : "";

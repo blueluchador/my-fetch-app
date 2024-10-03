@@ -7,3 +7,5 @@ export const getDogsLoading = (state: RootState): boolean =>
   state.dogBreeds.loading || state.dogSearch.loading || state.dogs.loading;
 
 export const getDogs = (state: RootState): Dog[] => state.dogs.dogs;
+
+export const getNumSearchResults = (state: RootState): number => state.dogSearch.search.total;

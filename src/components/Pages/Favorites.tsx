@@ -1,21 +1,7 @@
-// import React from "react";
-// import { FormattedMessage } from "react-intl";
-// import { Heading, Pane } from "evergreen-ui";
-
-// const Favorites: React.FC = () => {
-//   return (
-//     <Pane>
-//       <Heading size={800}>
-//         <FormattedMessage id="FAVORITES_PAGE_HEADING" />
-//       </Heading>
-//     </Pane>
-//   );
-// };
-
-// export default Favorites;
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { Card, Heading, Image, Pane, Text } from "evergreen-ui";
+import { Card, Heading, Icon, Image, Pane, Text } from "evergreen-ui";
+import { HeartIcon } from "evergreen-ui"; // Import the Heart Icon
 
 // Define the Dog interface
 interface Dog {
@@ -82,7 +68,19 @@ const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => (
     margin={16}
     padding={16}
     width={240}>
-    <Image borderRadius={8} height={200} src={dog.img} width={200} />
+    {/* Pane that contains the image and heart icon */}
+    <Pane height={200} position="relative" width={200}>
+      {/* Image of the dog */}
+      <Image borderRadius={8} height={200} src={dog.img} width={200} />
+
+      {/* Heart icon overlay */}
+      <Pane position="absolute" right={8} top={8}>
+        {/* <IconButton icon={HeartIcon} intent="danger" /> */}
+        <Icon color="danger" icon={HeartIcon} size={20} />
+      </Pane>
+    </Pane>
+
+    {/* Dog details */}
     <Heading marginTop={8} size={600}>
       {dog.name}
     </Heading>

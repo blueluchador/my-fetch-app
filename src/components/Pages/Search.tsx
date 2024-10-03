@@ -16,17 +16,17 @@ import {
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
-import { getDogBreeds, getDogs, getDogsLoading } from "../../redux/selectors";
+import { getDogBreeds, getDogs, getDogsLoading, getNumSearchResults } from "../../redux/selectors";
 import { fetchDogBreeds, searchDogs } from "../../redux/thunks/dogs.thunks";
 
 const Search: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const breeds: string[] = useSelector(getDogBreeds);
+  const numSearchResults = useSelector(getNumSearchResults);
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
 
-  const [filteredDogs, setFilteredDogs] = useState<Dog[]>(dogData);
   const [breedFilter, setBreedFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<"breed:asc" | "breed:desc" | "age:asc">("breed:asc");
@@ -37,21 +37,8 @@ const Search: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(searchDogs(undefined, sortOrder));
-  }, [dispatch, sortOrder]);
-
-  useEffect(() => {
-    const sortedDogs = [...dogData]
-      .filter((dog) => breedFilter === "" || dog.breed === breedFilter)
-      .sort((a, b) => {
-        if (sortOrder === "breed:asc") {
-          return a.breed.localeCompare(b.breed);
-        } else {
-          return b.breed.localeCompare(a.breed);
-        }
-      });
-    setFilteredDogs(sortedDogs);
-  }, [breedFilter, dogData]);
+    dispatch(searchDogs(breedFilter === "" ? undefined : [breedFilter], sortOrder));
+  }, [breedFilter, dispatch, sortOrder]);
 
   const sortOrderMap = {
     "age:asc": "Sort by Age",
@@ -74,6 +61,8 @@ const Search: React.FC = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const totalPages = (): number => Math.ceil(numSearchResults / dogsPerPage);
 
   if (dogsLoading) {
     return (
@@ -107,7 +96,7 @@ const Search: React.FC = () => {
                 <TextInput
                   ref={getRef}
                   placeholder="Filter by breed"
-                  onFocus={openMenu} // Opens the menu when the input is focused
+                  onFocus={openMenu}
                   {...getInputProps()}
                 />
               );
@@ -137,31 +126,25 @@ const Search: React.FC = () => {
           <Table.TextHeaderCell></Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
-          {filteredDogs
-            .slice((currentPage - 1) * dogsPerPage, currentPage * dogsPerPage)
-            .map((dog) => (
-              <Table.Row key={dog.id}>
-                <Table.TextCell>
-                  <Avatar name={dog.name} size={48} src={dog.img} />
-                </Table.TextCell>
-                <Table.TextCell>{dog.name}</Table.TextCell>
-                <Table.TextCell>{dog.breed}</Table.TextCell>
-                <Table.TextCell>{dog.age}</Table.TextCell>
-                <Table.TextCell>{dog.zip_code}</Table.TextCell>
-                <Table.TextCell>
-                  <HeartIcon color="disabled" cursor="pointer" size={18} />
-                </Table.TextCell>
-              </Table.Row>
-            ))}
+          {dogData.map((dog) => (
+            <Table.Row key={dog.id}>
+              <Table.TextCell>
+                <Avatar name={dog.name} size={48} src={dog.img} />
+              </Table.TextCell>
+              <Table.TextCell>{dog.name}</Table.TextCell>
+              <Table.TextCell>{dog.breed}</Table.TextCell>
+              <Table.TextCell>{dog.age}</Table.TextCell>
+              <Table.TextCell>{dog.zip_code}</Table.TextCell>
+              <Table.TextCell>
+                <HeartIcon color="disabled" cursor="pointer" size={18} />
+              </Table.TextCell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table>
 
       {/* Pagination */}
-      <Pagination
-        page={currentPage}
-        totalPages={Math.ceil(filteredDogs.length / dogsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      <Pagination page={currentPage} totalPages={totalPages()} onPageChange={handlePageChange} />
     </Pane>
   );
 };
