@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDispatch } from "react-redux";
-import { Button, Link, majorScale, Pane, Text } from "evergreen-ui";
+import { Button, Image, Link, majorScale, Pane, Text } from "evergreen-ui";
 
 import { AppDispatch } from "../../redux";
 import { logout } from "../../redux/thunks";
@@ -28,9 +28,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         display="flex"
         justifyContent="space-between"
         padding={majorScale(2)}>
-        <Text fontWeight={500} size={600}>
+        {/* <Text fontWeight={500} size={600}>
           <FormattedMessage id="APP_NAME" />
-        </Text>
+        </Text> */}
+
+        {/* Container for Image and Text */}
+        <Pane alignItems="center" display="flex">
+          {/* Image on the Left */}
+          <Image alt="App Logo" height={32} marginRight={majorScale(2)} src="/images/logo.png" />
+
+          {/* App Name */}
+          <Text fontWeight={500} size={600}>
+            <FormattedMessage id="APP_NAME" />
+          </Text>
+        </Pane>
 
         <Pane alignItems="center" display="flex">
           {/* Search Link */}
