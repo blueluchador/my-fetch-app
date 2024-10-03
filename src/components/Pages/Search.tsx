@@ -6,6 +6,7 @@ import {
   Avatar,
   Combobox,
   Heading,
+  HeartIcon,
   Pagination,
   Pane,
   Spinner,
@@ -25,29 +26,50 @@ const Search: React.FC = () => {
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
 
-  useEffect(() => {
-    dispatch(fetchDogBreeds());
-    dispatch(searchDogs());
-  }, [dispatch]);
-
   const [filteredDogs, setFilteredDogs] = useState<Dog[]>(dogData);
   const [breedFilter, setBreedFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<"breed:asc" | "breed:desc" | "age:asc">("breed:asc");
   const dogsPerPage = 25;
+
+  useEffect(() => {
+    dispatch(fetchDogBreeds());
+  }, []);
+
+  useEffect(() => {
+    dispatch(searchDogs(undefined, sortOrder));
+  }, [dispatch, sortOrder]);
 
   useEffect(() => {
     const sortedDogs = [...dogData]
       .filter((dog) => breedFilter === "" || dog.breed === breedFilter)
       .sort((a, b) => {
-        if (sortOrder === "asc") {
+        if (sortOrder === "breed:asc") {
           return a.breed.localeCompare(b.breed);
         } else {
           return b.breed.localeCompare(a.breed);
         }
       });
     setFilteredDogs(sortedDogs);
-  }, [breedFilter, dogData, sortOrder]);
+  }, [breedFilter, dogData]);
+
+  const sortOrderMap = {
+    "age:asc": "Sort by Age",
+    "breed:asc": "Sort by Breed: A-Z",
+    "breed:desc": "Sort by Breed: Z-A",
+  } as const;
+
+  // Create a reverse map with an explicit type
+  const reverseSortOrderMap = {
+    "Sort by Age": "age:asc",
+    "Sort by Breed: A-Z": "breed:asc",
+    "Sort by Breed: Z-A": "breed:desc",
+  } as Record<string, "breed:asc" | "breed:desc" | "age:asc">;
+
+  const handleSortOrderChange = (selected: string) => {
+    // Change the state
+    setSortOrder(reverseSortOrderMap[selected]);
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -96,11 +118,10 @@ const Search: React.FC = () => {
         {/* Sort combobox */}
         <Pane>
           <Combobox
-            items={["Ascending", "Descending", "Sort by Age"]}
+            items={Object.values(sortOrderMap)}
             marginBottom={16}
-            placeholder="Sort by Breed"
-            selectedItem={sortOrder === "asc" ? "Ascending" : "Descending"}
-            onChange={(selected) => setSortOrder(selected === "Ascending" ? "asc" : "desc")}
+            selectedItem={sortOrderMap[sortOrder]}
+            onChange={handleSortOrderChange}
           />
         </Pane>
       </Pane>
@@ -113,6 +134,7 @@ const Search: React.FC = () => {
           <Table.TextHeaderCell>Breed</Table.TextHeaderCell>
           <Table.TextHeaderCell>Age</Table.TextHeaderCell>
           <Table.TextHeaderCell>Zip Code</Table.TextHeaderCell>
+          <Table.TextHeaderCell></Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
           {filteredDogs
@@ -120,12 +142,15 @@ const Search: React.FC = () => {
             .map((dog) => (
               <Table.Row key={dog.id}>
                 <Table.TextCell>
-                  <Avatar name={dog.name} size={40} src={dog.img} />
+                  <Avatar name={dog.name} size={48} src={dog.img} />
                 </Table.TextCell>
                 <Table.TextCell>{dog.name}</Table.TextCell>
                 <Table.TextCell>{dog.breed}</Table.TextCell>
                 <Table.TextCell>{dog.age}</Table.TextCell>
                 <Table.TextCell>{dog.zip_code}</Table.TextCell>
+                <Table.TextCell>
+                  <HeartIcon color="disabled" cursor="pointer" size={18} />
+                </Table.TextCell>
               </Table.Row>
             ))}
         </Table.Body>
@@ -143,43 +168,6 @@ const Search: React.FC = () => {
 
 export default Search;
 
-// import React, { useState } from 'react'
-// import { Pane, Text, Icon, Avatar, Autocomplete, Combobox, Button } from 'evergreen-ui'
-
-// interface Dog {
-//   id: string
-//   img: string
-//   name: string
-//   age: number
-//   zip_code: string
-//   breed: string
-// }
-
-// const DogList = ({ dogs }: { dogs: Dog[] }) => {
-//   const [favorites, setFavorites] = useState<string[]>([])
-
-//   const toggleFavorite = (dogId: string) => {
-//     setFavorites(prevFavorites =>
-//       prevFavorites.includes(dogId)
-//         ? prevFavorites.filter(fav => fav !== dogId) // Remove from favorites
-//         : [...prevFavorites, dogId] // Add to favorites
-//     )
-//   }
-
-//   return (
-//     <Pane>
-//       {dogs.map((dog) => (
-//         <Pane key={dog.id} display="flex" alignItems="center" justifyContent="space-between" padding={8} border="default" marginBottom={8}>
-//           <Pane display="flex" alignItems="center">
-//             <Avatar src={dog.img} name={dog.name} size={40} marginRight={16} />
-//             <Pane>
-//               <Text>Name: {dog.name}</Text>
-//               <Text>Breed: {dog.breed}</Text>
-//               <Text>Age: {dog.age}</Text>
-//               <Text>Zip Code: {dog.zip_code}</Text>
-//             </Pane>
-//           </Pane>
-
 //           {/* Favorites Icon (Heart) */}
 //           <Icon
 //             icon={favorites.includes(dog.id) ? 'heart' : 'heart-outline'}
@@ -188,38 +176,3 @@ export default Search;
 //             cursor="pointer"
 //             onClick={() => toggleFavorite(dog.id)}
 //           />
-//         </Pane>
-//       ))}
-//     </Pane>
-//   )
-// }
-
-// const dogs: Dog[] = [
-//   {
-//     id: '1',
-//     img: 'https://placekitten.com/100/100',
-//     name: 'Buddy',
-//     age: 2,
-//     zip_code: '12345',
-//     breed: 'Labrador'
-//   },
-//   {
-//     id: '2',
-//     img: 'https://placekitten.com/100/100',
-//     name: 'Max',
-//     age: 3,
-//     zip_code: '54321',
-//     breed: 'Beagle'
-//   },
-//   // Add more dog entries here
-// ]
-
-// const App = () => {
-//   return (
-//     <Pane>
-//       <DogList dogs={dogs} />
-//     </Pane>
-//   )
-// }
-
-// export default App
