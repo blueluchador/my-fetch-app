@@ -30,7 +30,9 @@ const Search: React.FC = () => {
   const [breedFilter, setBreedFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<"breed:asc" | "breed:desc" | "age:asc">("breed:asc");
+
   const dogsPerPage = 25;
+  const totalPages = (): number => Math.ceil(numSearchResults / dogsPerPage);
 
   useEffect(() => {
     dispatch(fetchDogBreeds());
@@ -61,8 +63,6 @@ const Search: React.FC = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-
-  const totalPages = (): number => Math.ceil(numSearchResults / dogsPerPage);
 
   return (
     <Pane margin="auto" width={800}>
