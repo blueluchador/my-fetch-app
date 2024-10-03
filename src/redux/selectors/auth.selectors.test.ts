@@ -4,14 +4,9 @@ import { getIsAuthenticated, isLoginLoading } from "./auth.selectors";
 
 describe("getIsAuthenticated selector", () => {
   it("should return true when user is authenticated", () => {
-    const mockState: RootState = {
+    const mockState = {
       authStatus: {
         isAuthenticated: true,
-      },
-      dogBreeds: {
-        breeds: [],
-        error: null,
-        loading: false,
       },
       login: {
         error: null,
@@ -19,19 +14,14 @@ describe("getIsAuthenticated selector", () => {
       },
     };
 
-    const result = getIsAuthenticated(mockState);
+    const result = getIsAuthenticated(mockState as unknown as RootState);
     expect(result).toBe(true);
   });
 
   it("should return false when user is not authenticated", () => {
-    const mockState: RootState = {
+    const mockState = {
       authStatus: {
         isAuthenticated: false,
-      },
-      dogBreeds: {
-        breeds: [],
-        error: null,
-        loading: false,
       },
       login: {
         error: null,
@@ -39,21 +29,16 @@ describe("getIsAuthenticated selector", () => {
       },
     };
 
-    const result = getIsAuthenticated(mockState);
+    const result = getIsAuthenticated(mockState as unknown as RootState);
     expect(result).toBe(false);
   });
 });
 
 describe("isLoginLoading selector", () => {
   it("should return true when login loading is true", () => {
-    const mockState: RootState = {
+    const mockState = {
       authStatus: {
         isAuthenticated: true,
-      },
-      dogBreeds: {
-        breeds: [],
-        error: null,
-        loading: false,
       },
       login: {
         error: null,
@@ -61,18 +46,13 @@ describe("isLoginLoading selector", () => {
       },
     };
 
-    expect(isLoginLoading(mockState)).toBe(true);
+    expect(isLoginLoading(mockState as unknown as RootState)).toBe(true);
   });
 
   it("should return false when login loading is false", () => {
-    const mockState: RootState = {
+    const mockState = {
       authStatus: {
         isAuthenticated: true,
-      },
-      dogBreeds: {
-        breeds: [],
-        error: null,
-        loading: false,
       },
       login: {
         error: null,
@@ -80,6 +60,6 @@ describe("isLoginLoading selector", () => {
       },
     };
 
-    expect(isLoginLoading(mockState)).toBe(false);
+    expect(isLoginLoading(mockState as unknown as RootState)).toBe(false);
   });
 });
