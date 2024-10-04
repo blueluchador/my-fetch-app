@@ -153,12 +153,12 @@ const Search: React.FC = () => {
       {/* Dog list */}
       <Table>
         <Table.Head>
-          <Table.TextHeaderCell></Table.TextHeaderCell>
+          <Table.TextHeaderCell>Dog Photo</Table.TextHeaderCell>
           <Table.TextHeaderCell>Name</Table.TextHeaderCell>
           <Table.TextHeaderCell>Breed</Table.TextHeaderCell>
           <Table.TextHeaderCell>Age</Table.TextHeaderCell>
           <Table.TextHeaderCell>Zip Code</Table.TextHeaderCell>
-          <Table.TextHeaderCell></Table.TextHeaderCell>
+          <Table.TextHeaderCell aria-label="Mark as favorite">Favorites</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body height={isMobile ? "100%" : 480}>
           {dogsLoading ? (
