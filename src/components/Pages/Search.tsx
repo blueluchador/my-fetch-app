@@ -23,7 +23,7 @@ import {
   getFavoriteDogs,
   getNumSearchResults,
 } from "../../redux/selectors";
-import { fetchDogBreeds, searchDogs } from "../../redux/thunks/dogs.thunks";
+import { fetchDogBreeds, searchDogs } from "../../redux/thunks";
 import {
   addToFavorites,
   loadFavorites,

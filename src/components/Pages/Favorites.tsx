@@ -7,7 +7,7 @@ import { HeartIcon } from "evergreen-ui";
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
 import { getFavoriteDogs } from "../../redux/selectors";
-import { loadFavorites, removeFromFavorites } from "../../redux/thunks/favorites.thunks";
+import { loadFavorites, removeFromFavorites } from "../../redux/thunks";
 
 // DogCard component that accepts a Dog object as a prop
 const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => {
