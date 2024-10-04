@@ -33,7 +33,7 @@ import {
 const Search: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const breeds: string[] = [...[""], ...useSelector(getDogBreeds)];
+  const breeds: string[] = [...["View all breeds"], ...useSelector(getDogBreeds)];
   const numSearchResults = useSelector(getNumSearchResults);
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
@@ -57,13 +57,11 @@ const Search: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(
-      searchDogs(
-        breedFilter === "" ? undefined : [breedFilter],
-        sortOrder,
-        (currentPage - 1) * dogsPerPage,
-      ),
-    );
+    const breeds =
+      breedFilter === "" || breedFilter === "View all breeds" ? undefined : [breedFilter];
+    console.log(breeds);
+
+    dispatch(searchDogs(breeds, sortOrder, (currentPage - 1) * dogsPerPage));
   }, [breedFilter, dispatch, sortOrder, currentPage]);
 
   const sortOrderMap = {
@@ -103,7 +101,6 @@ const Search: React.FC = () => {
 
   // Detect if this is running on a mobile device.
   const [isMobile, setIsMobile] = useState(false);
-  console.log(isMobile);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia("(max-width: 768px)");
