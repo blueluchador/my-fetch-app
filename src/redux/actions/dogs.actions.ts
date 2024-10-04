@@ -1,4 +1,4 @@
-import { Dog, DogMatch, SearchResult } from "../../models";
+import { Dog, SearchResult } from "../../models";
 
 export const SEARCH_DOGS_REQUEST = "SEARCH_DOGS_REQUEST";
 export const SEARCH_DOGS_SUCCESS = "SEARCH_DOGS_SUCCESS";
@@ -11,10 +11,6 @@ export const FETCH_DOGS_FAILURE = "FETCH_DOGS_FAILURE";
 export const FETCH_DOG_BREEDS_REQUEST = "FETCH_DOG_BREEDS_REQUEST";
 export const FETCH_DOG_BREEDS_SUCCESS = "FETCH_DOG_BREEDS_SUCCESS";
 export const FETCH_DOG_BREEDS_FAILURE = "FETCH_DOG_BREEDS_FAILURE";
-
-export const MATCH_DOG_REQUEST = "MATCH_DOG_REQUEST";
-export const MATCH_DOG_SUCCESS = "MATCH_DOG_SUCCESS";
-export const MATCH_DOG_FAILURE = "MATCH_DOG_FAILURE";
 
 interface FetchDogBreedsRequest {
   type: typeof FETCH_DOG_BREEDS_REQUEST;
@@ -58,20 +54,6 @@ interface FetchDogsFailure {
   error: string;
 }
 
-interface MatchDogRequest {
-  type: typeof MATCH_DOG_REQUEST;
-}
-
-interface MatchDogSuccess {
-  type: typeof MATCH_DOG_SUCCESS;
-  payload: DogMatch;
-}
-
-interface MatchDogFailure {
-  type: typeof MATCH_DOG_FAILURE;
-  error: string;
-}
-
 export type DogsActionTypes =
   | FetchDogBreedsRequest
   | FetchDogBreedsSuccess
@@ -81,10 +63,7 @@ export type DogsActionTypes =
   | SearchDogsFailure
   | FetchDogsRequest
   | FetchDogsSuccess
-  | FetchDogsFailure
-  | MatchDogRequest
-  | MatchDogSuccess
-  | MatchDogFailure;
+  | FetchDogsFailure;
 
 export const fetchDogBreedsRequest = (): FetchDogBreedsRequest => ({
   type: FETCH_DOG_BREEDS_REQUEST,
@@ -126,18 +105,4 @@ export const fetchDogsSuccess = (dogs: Dog[]): FetchDogsSuccess => ({
 export const fetchDogsFailure = (error: string): FetchDogsFailure => ({
   error,
   type: FETCH_DOGS_FAILURE,
-});
-
-export const matchDogsRequest = (): MatchDogRequest => ({
-  type: MATCH_DOG_REQUEST,
-});
-
-export const matchDogSuccess = (match: DogMatch): MatchDogSuccess => ({
-  payload: match,
-  type: MATCH_DOG_SUCCESS,
-});
-
-export const matchDogFailure = (error: string): MatchDogFailure => ({
-  error,
-  type: MATCH_DOG_FAILURE,
 });

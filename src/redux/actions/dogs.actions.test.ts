@@ -1,4 +1,4 @@
-import { Dog, DogMatch, SearchResult } from "../../models";
+import { Dog, SearchResult } from "../../models";
 
 import {
   FETCH_DOG_BREEDS_FAILURE,
@@ -13,12 +13,6 @@ import {
   fetchDogsFailure,
   fetchDogsRequest,
   fetchDogsSuccess,
-  MATCH_DOG_FAILURE,
-  MATCH_DOG_REQUEST,
-  MATCH_DOG_SUCCESS,
-  matchDogFailure,
-  matchDogsRequest,
-  matchDogSuccess,
   SEARCH_DOGS_FAILURE,
   SEARCH_DOGS_REQUEST,
   SEARCH_DOGS_SUCCESS,
@@ -117,28 +111,5 @@ describe("Dog actions", () => {
       type: FETCH_DOGS_FAILURE,
     };
     expect(fetchDogsFailure(error)).toEqual(expectedAction);
-  });
-
-  it("should create an action to request matching a dog", () => {
-    const expectedAction = { type: MATCH_DOG_REQUEST };
-    expect(matchDogsRequest()).toEqual(expectedAction);
-  });
-
-  it("should create an action for successfully matching a dog", () => {
-    const match: DogMatch = { match: "Labrador" };
-    const expectedAction = {
-      payload: match,
-      type: MATCH_DOG_SUCCESS,
-    };
-    expect(matchDogSuccess(match)).toEqual(expectedAction);
-  });
-
-  it("should create an action for matching a dog failure", () => {
-    const error = "Failed to match dog";
-    const expectedAction = {
-      error,
-      type: MATCH_DOG_FAILURE,
-    };
-    expect(matchDogFailure(error)).toEqual(expectedAction);
   });
 });
