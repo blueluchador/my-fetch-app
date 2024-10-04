@@ -28,6 +28,7 @@ export const fetchDogBreeds = (): ThunkAction<
 
     try {
       const dogBreeds: string[] = await fetchDogBreedsApi();
+      dogBreeds.sort();
       dispatch(fetchDogBreedsSuccess(dogBreeds));
     } catch (error) {
       dispatch(fetchDogBreedsFailure((error as Error).message));

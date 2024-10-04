@@ -33,7 +33,7 @@ import {
 const Search: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const breeds: string[] = useSelector(getDogBreeds);
+  const breeds: string[] = [...[""], ...useSelector(getDogBreeds)];
   const numSearchResults = useSelector(getNumSearchResults);
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
@@ -50,7 +50,7 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchDogBreeds());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(loadFavorites());
@@ -87,6 +87,7 @@ const Search: React.FC = () => {
   };
 
   const handlePageChange = (page: number) => {
+    console.log(page);
     setCurrentPage(page);
   };
 
@@ -137,7 +138,7 @@ const Search: React.FC = () => {
           <Table.TextHeaderCell>Zip Code</Table.TextHeaderCell>
           <Table.TextHeaderCell></Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body>
+        <Table.Body height={480}>
           {dogsLoading ? (
             // Display spinner inside the table body
             <Table.Row>

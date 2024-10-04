@@ -57,23 +57,28 @@ const DogGrid: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <Pane padding={24}>
+    <>
       {dogs.length === 0 ? (
-        <Text>No favorite dogs available</Text>
+        <Text>No favorite dogs selected yet. You can add favorites from the search page.</Text>
       ) : (
-        <Pane display="grid" gap={16} gridTemplateColumns="repeat(3, 1fr)" justifyContent="center">
+        <Pane
+          display="grid"
+          gap={16}
+          gridTemplateColumns="repeat(3, 1fr)"
+          justifyContent="center"
+          padding={24}>
           {dogs.map((dog) => (
             <DogCard key={dog.id} dog={dog} />
           ))}
         </Pane>
       )}
-    </Pane>
+    </>
   );
 };
 
 const Favorites: React.FC = () => (
   <Pane margin="auto" width={800}>
-    <Heading size={800}>
+    <Heading marginBottom={16} size={800}>
       <FormattedMessage id="FAVORITES_PAGE_HEADING" />
     </Heading>
     <DogGrid />
