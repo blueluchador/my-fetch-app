@@ -7,6 +7,7 @@ import { dogsReducer } from "./dogs.reducer";
 import { dogSearchReducer } from "./dogSearch.reducers";
 import { favoritesReducer } from "./favorites.reducer";
 import { loginReducer } from "./login.reducer";
+import { matchDogReducer } from "./matchDog.reducer";
 
 export const reducers = combineReducers({
   authStatus: authStatusReducer,
@@ -15,4 +16,5 @@ export const reducers = combineReducers({
   dogs: dogsReducer,
   favorites: favoritesReducer,
   login: loginReducer,
+  matchDog: matchDogReducer,
 });
