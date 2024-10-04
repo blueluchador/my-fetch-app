@@ -39,13 +39,14 @@ export const fetchDogBreeds = (): ThunkAction<
 export const searchDogs = (
   breeds?: string[],
   sort?: string,
+  from?: number,
 ): ThunkAction<Promise<void>, RootState, unknown, DogsActionTypes> => {
   return async (dispatch) => {
     // Search
     dispatch(searchDogsRequest());
 
     try {
-      const result: SearchResult = await dogSearchApi(breeds, sort);
+      const result: SearchResult = await dogSearchApi(breeds, sort, from);
       dispatch(searchDogsSuccess(result));
 
       // Fetch dogs

@@ -17,7 +17,11 @@ export const fetchDogBreedsApi = async (): Promise<string[]> => {
   return data;
 };
 
-export const dogSearchApi = async (breeds?: string[], sort?: string): Promise<SearchResult> => {
+export const dogSearchApi = async (
+  breeds?: string[],
+  sort?: string,
+  from?: number,
+): Promise<SearchResult> => {
   const breedQuery =
     breeds && breeds.length > 0
       ? breeds.map((breed) => `breeds=${encodeURIComponent(breed)}`).join("&")
@@ -25,8 +29,10 @@ export const dogSearchApi = async (breeds?: string[], sort?: string): Promise<Se
 
   const sortQuery = sort ? `sort=${encodeURIComponent(sort)}` : "";
 
-  // Combine breed and sort queries
-  const query = [breedQuery, sortQuery].filter(Boolean).join("&");
+  const fromQuery = typeof from === "number" ? `from=${from}` : "";
+
+  // Combine breed, sort, and from queries
+  const query = [breedQuery, sortQuery, fromQuery].filter(Boolean).join("&");
 
   const response = await fetch(`${baseUrl}/dogs/search${query ? `?${query}` : ""}`, {
     credentials: "include",

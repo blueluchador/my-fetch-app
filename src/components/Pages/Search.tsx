@@ -57,8 +57,14 @@ const Search: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(searchDogs(breedFilter === "" ? undefined : [breedFilter], sortOrder));
-  }, [breedFilter, dispatch, sortOrder]);
+    dispatch(
+      searchDogs(
+        breedFilter === "" ? undefined : [breedFilter],
+        sortOrder,
+        (currentPage - 1) * dogsPerPage,
+      ),
+    );
+  }, [breedFilter, dispatch, sortOrder, currentPage]);
 
   const sortOrderMap = {
     "age:asc": "Sort by Age",
@@ -72,6 +78,11 @@ const Search: React.FC = () => {
     "Sort by Breed: A-Z": "breed:asc",
     "Sort by Breed: Z-A": "breed:desc",
   } as Record<string, "breed:asc" | "breed:desc" | "age:asc">;
+
+  const handleBreedFilterChange = (selectedItem: string) => {
+    setBreedFilter(selectedItem);
+    setCurrentPage(1);
+  };
 
   const handleSortOrderChange = (selected: string) => {
     setSortOrder(reverseSortOrderMap[selected]);
@@ -87,7 +98,6 @@ const Search: React.FC = () => {
   };
 
   const handlePageChange = (page: number) => {
-    console.log(page);
     setCurrentPage(page);
   };
 
@@ -100,10 +110,7 @@ const Search: React.FC = () => {
       <Pane display="flex" justifyContent="flex-end" marginBottom={3}>
         {/* Breed filter with autocomplete */}
         <Pane flex="1">
-          <Autocomplete
-            items={breeds}
-            title="Filter by Breed"
-            onChange={(selectedItem) => setBreedFilter(selectedItem)}>
+          <Autocomplete items={breeds} title="Filter by Breed" onChange={handleBreedFilterChange}>
             {({ getInputProps, getRef, openMenu }) => {
               return (
                 <TextInput
@@ -174,7 +181,13 @@ const Search: React.FC = () => {
       </Table>
 
       {/* Pagination */}
-      <Pagination page={currentPage} totalPages={totalPages()} onPageChange={handlePageChange} />
+      <Pagination
+        page={currentPage}
+        totalPages={totalPages()}
+        onNextPage={() => setCurrentPage(currentPage + 1)}
+        onPageChange={handlePageChange}
+        onPreviousPage={() => setCurrentPage(currentPage - 1)}
+      />
     </Pane>
   );
 };
