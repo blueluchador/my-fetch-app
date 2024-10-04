@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Heading, IconButton, Image, Pane, Text } from "evergreen-ui";
-import { HeartIcon } from "evergreen-ui"; // Import the Heart Icon
+import { Button, Card, Heading, IconButton, Image, Pane, Text } from "evergreen-ui";
+import { HeartIcon } from "evergreen-ui";
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
@@ -76,13 +76,31 @@ const DogGrid: React.FC = () => {
   );
 };
 
-const Favorites: React.FC = () => (
-  <Pane margin="auto" width={800}>
-    <Heading marginBottom={16} size={800}>
-      <FormattedMessage id="FAVORITES_PAGE_HEADING" />
-    </Heading>
-    <DogGrid />
-  </Pane>
-);
+// Favorites component with conditional rendering for the Fetch Match button
+const Favorites: React.FC = () => {
+  const dogs: Dog[] = useSelector(getFavoriteDogs);
+
+  const handleFetchMatch = () => {
+    // Logic to fetch match goes here
+    console.log("Fetching match...");
+  };
+
+  return (
+    <Pane margin="auto" width={800}>
+      <Heading marginBottom={16} size={800}>
+        <FormattedMessage id="FAVORITES_PAGE_HEADING" />
+      </Heading>
+
+      {/* Conditionally render the Fetch Match button if there are favorite dogs */}
+      {dogs.length > 0 && (
+        <Button appearance="primary" marginBottom={16} onClick={handleFetchMatch}>
+          Fetch Match
+        </Button>
+      )}
+
+      <DogGrid />
+    </Pane>
+  );
+};
 
 export default Favorites;
