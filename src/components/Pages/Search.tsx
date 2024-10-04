@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -31,9 +32,15 @@ import {
 } from "../../redux/thunks/favorites.thunks";
 
 const Search: React.FC = () => {
+  const intl = useIntl();
+
   const dispatch: AppDispatch = useDispatch();
 
-  const breeds: string[] = [...["View all breeds"], ...useSelector(getDogBreeds)];
+  const viealAllBreedsFilterLabel: string = intl.formatMessage({
+    id: "VIEW_ALL_BREEDS_FILTER_LABEL",
+  });
+
+  const breeds: string[] = [...[viealAllBreedsFilterLabel], ...useSelector(getDogBreeds)];
   const numSearchResults = useSelector(getNumSearchResults);
   const dogsLoading = useSelector(getDogsLoading);
   const dogData: Dog[] = useSelector(getDogs);
@@ -58,22 +65,26 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     const breeds =
-      breedFilter === "" || breedFilter === "View all breeds" ? undefined : [breedFilter];
+      breedFilter === "" || breedFilter === viealAllBreedsFilterLabel ? undefined : [breedFilter];
 
     dispatch(searchDogs(breeds, sortOrder, (currentPage - 1) * dogsPerPage));
   }, [breedFilter, dispatch, sortOrder, currentPage]);
 
+  const sortByAgeLabel = intl.formatMessage({ id: "SORT_BY_AGE_LABEL" });
+  const sortByBreedAscendingLabel = intl.formatMessage({ id: "SORT_BY_BREED_ASCENDING_LABEL" });
+  const sortByBreedDescendingLabel = intl.formatMessage({ id: "SORT_BY_BREED_DECENDING_LABEL" });
+
   const sortOrderMap = {
-    "age:asc": "Sort by Age",
-    "breed:asc": "Sort by Breed: A-Z",
-    "breed:desc": "Sort by Breed: Z-A",
+    "age:asc": sortByAgeLabel,
+    "breed:asc": sortByBreedAscendingLabel,
+    "breed:desc": sortByBreedDescendingLabel,
   } as const;
 
   // Create a reverse map with an explicit type
   const reverseSortOrderMap = {
-    "Sort by Age": "age:asc",
-    "Sort by Breed: A-Z": "breed:asc",
-    "Sort by Breed: Z-A": "breed:desc",
+    [sortByAgeLabel]: "age:asc",
+    [sortByBreedAscendingLabel]: "breed:asc",
+    [sortByBreedDescendingLabel]: "breed:desc",
   } as Record<string, "breed:asc" | "breed:desc" | "age:asc">;
 
   const handleBreedFilterChange = (selectedItem: string) => {
@@ -125,12 +136,15 @@ const Search: React.FC = () => {
       <Pane display="flex" justifyContent="flex-end" marginBottom={3}>
         {/* Breed filter with autocomplete */}
         <Pane flex="1">
-          <Autocomplete items={breeds} title="Filter by Breed" onChange={handleBreedFilterChange}>
+          <Autocomplete
+            items={breeds}
+            title={intl.formatMessage({ id: "FILTER_BY_BREED_TITLE" })}
+            onChange={handleBreedFilterChange}>
             {({ getInputProps, getRef, openMenu }) => {
               return (
                 <TextInput
                   ref={getRef}
-                  placeholder="Filter by breed"
+                  placeholder={intl.formatMessage({ id: "FILTER_BY_BREED_PLACEHOLDER" })}
                   onFocus={openMenu}
                   {...getInputProps()}
                 />
@@ -153,12 +167,24 @@ const Search: React.FC = () => {
       {/* Dog list */}
       <Table>
         <Table.Head>
-          <Table.TextHeaderCell>Dog Photo</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Name</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Breed</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Age</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Zip Code</Table.TextHeaderCell>
-          <Table.TextHeaderCell aria-label="Mark as favorite">Favorites</Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="AVATAR_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="DOG_NAME_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="BREED_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="AGE_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="ZIP_CODE_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            <FormattedMessage id="FAVORITES_COLUMN_LABEL" />
+          </Table.TextHeaderCell>
         </Table.Head>
         <Table.Body height={isMobile ? "100%" : 480}>
           {dogsLoading ? (
