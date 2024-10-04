@@ -13,7 +13,7 @@ export const fetchDogMatch = (
 
     try {
       const match: DogMatch = await dogMatchApi(dogs);
-      matchDogSuccess(match);
+      dispatch(matchDogSuccess(match));
     } catch (error) {
       dispatch(matchDogFailure((error as Error).message));
     }

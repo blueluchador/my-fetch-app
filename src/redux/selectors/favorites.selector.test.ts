@@ -1,6 +1,6 @@
 // Import the necessary dependencies
 import { Dog } from "../../models";
-import { geDogMatch, getFavoriteDogs } from "../selectors";
+import { getDogMatch, getFavoriteDogs } from "../selectors";
 import { RootState } from "../store";
 
 describe("Selectors", () => {
@@ -85,7 +85,7 @@ describe("Selectors", () => {
     });
   });
 
-  describe("geDogMatch", () => {
+  describe("getDogMatch", () => {
     it("should return the dog's match string", () => {
       const mockState: RootState = {
         ...initialState,
@@ -99,7 +99,7 @@ describe("Selectors", () => {
         },
       };
 
-      const result = geDogMatch(mockState);
+      const result = getDogMatch(mockState);
       expect(result).toBe("Perfect Match!");
     });
 
@@ -116,7 +116,7 @@ describe("Selectors", () => {
         },
       };
 
-      const result = geDogMatch(mockState);
+      const result = getDogMatch(mockState);
       expect(result).toBe("");
     });
   });

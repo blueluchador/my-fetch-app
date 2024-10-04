@@ -59,7 +59,6 @@ const Search: React.FC = () => {
   useEffect(() => {
     const breeds =
       breedFilter === "" || breedFilter === "View all breeds" ? undefined : [breedFilter];
-    console.log(breeds);
 
     dispatch(searchDogs(breeds, sortOrder, (currentPage - 1) * dogsPerPage));
   }, [breedFilter, dispatch, sortOrder, currentPage]);

@@ -28,10 +28,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         display="flex"
         justifyContent="space-between"
         padding={majorScale(2)}>
-        {/* <Text fontWeight={500} size={600}>
-          <FormattedMessage id="APP_NAME" />
-        </Text> */}
-
         {/* Container for Image and Text */}
         <Pane alignItems="center" display="flex">
           {/* Image on the Left */}

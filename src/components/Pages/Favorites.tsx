@@ -1,16 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Heading, IconButton, Image, Pane, Text } from "evergreen-ui";
+import {
+  Button,
+  Card,
+  Dialog,
+  Heading,
+  IconButton,
+  Image,
+  Pane,
+  Spinner,
+  Text,
+} from "evergreen-ui";
 import { HeartIcon } from "evergreen-ui";
 
 import { Dog } from "../../models";
 import { AppDispatch } from "../../redux";
-import { getFavoriteDogs } from "../../redux/selectors";
+import { getDogMatch, getDogMatchLoading, getFavoriteDogs } from "../../redux/selectors";
 import { loadFavorites, removeFromFavorites } from "../../redux/thunks";
+import { fetchDogMatch } from "../../redux/thunks/matchDog.thunks";
 
 // DogCard component that accepts a Dog object as a prop
-const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => {
+const DogCard: React.FC<{ dog: Dog; forMatch?: boolean }> = ({ dog, forMatch }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const handleUnheartDog = (id: string) => dispatch(removeFromFavorites(id));
@@ -19,7 +30,7 @@ const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => {
     <Card
       alignItems="center"
       display="flex"
-      elevation={2}
+      elevation={forMatch ? 0 : 2}
       flexDirection="column"
       justifyContent="center"
       margin={16}
@@ -31,9 +42,13 @@ const DogCard: React.FC<{ dog: Dog }> = ({ dog }) => {
         <Image borderRadius={8} height={200} src={dog.img} width={200} />
 
         {/* Heart icon overlay */}
-        <Pane position="absolute" right={8} top={8}>
-          <IconButton icon={HeartIcon} intent="danger" onClick={() => handleUnheartDog(dog.id)} />
-        </Pane>
+        {forMatch ? (
+          <></>
+        ) : (
+          <Pane position="absolute" right={8} top={8}>
+            <IconButton icon={HeartIcon} intent="danger" onClick={() => handleUnheartDog(dog.id)} />
+          </Pane>
+        )}
       </Pane>
 
       {/* Dog details */}
@@ -78,15 +93,63 @@ const DogGrid: React.FC = () => {
 
 // Favorites component with conditional rendering for the Fetch Match button
 const Favorites: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+
+  const [isShown, setIsShown] = useState(false);
+
   const dogs: Dog[] = useSelector(getFavoriteDogs);
+  const isDogMatchLoading: boolean = useSelector(getDogMatchLoading);
+  const match: string = useSelector(getDogMatch);
+
+  const getMatchedDog = (): Dog => {
+    return dogs.find((dog) => dog.id === match)!;
+  };
 
   const handleFetchMatch = () => {
-    // Logic to fetch match goes here
-    console.log("Fetching match...");
+    setIsShown(true);
+
+    if (dogs.length > 0) {
+      dispatch(fetchDogMatch(dogs.map((dog) => dog.id)));
+    }
   };
 
   return (
     <Pane margin="auto" width={800}>
+      {/* Dog match dialog */}
+      <Dialog
+        confirmLabel="OK"
+        hasCancel={false}
+        hasClose={!isDogMatchLoading}
+        hasFooter={!isDogMatchLoading}
+        isShown={isShown}
+        title="Your Dog Match"
+        onCloseComplete={() => setIsShown(false)}>
+        {isDogMatchLoading ? (
+          <Pane alignItems="center" display="flex" justifyContent="center">
+            <Spinner marginRight={8} size={24} />
+            <Text>Fetching dog match...</Text>
+          </Pane>
+        ) : (
+          <Pane alignItems="center" display="flex" flexDirection="column">
+            {/* Flex container for image and text side by side */}
+            <Pane alignItems="center" display="flex" justifyContent="center">
+              <Pane>
+                <Image alt="App Logo" src="/images/logo.png" />
+              </Pane>
+
+              <Pane marginLeft={16}>
+                <Text size={600}>Yay! We found a match!</Text>
+              </Pane>
+            </Pane>
+
+            {/* DogCard below the image and text */}
+            <Pane marginTop={16}>
+              <DogCard dog={getMatchedDog()} forMatch={true} />
+            </Pane>
+          </Pane>
+        )}
+      </Dialog>
+
       <Heading marginBottom={16} size={800}>
         <FormattedMessage id="FAVORITES_PAGE_HEADING" />
       </Heading>
