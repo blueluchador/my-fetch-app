@@ -101,6 +101,25 @@ const Search: React.FC = () => {
     setCurrentPage(page);
   };
 
+  // Detect if this is running on a mobile device.
+  const [isMobile, setIsMobile] = useState(false);
+  console.log(isMobile);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleMediaChange = () => {
+      setIsMobile(mobileQuery.matches);
+    };
+
+    handleMediaChange();
+    mobileQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mobileQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
   return (
     <Pane margin="auto" width={800}>
       <Heading marginBottom={16} size={800}>
@@ -145,7 +164,7 @@ const Search: React.FC = () => {
           <Table.TextHeaderCell>Zip Code</Table.TextHeaderCell>
           <Table.TextHeaderCell></Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body height={480}>
+        <Table.Body height={isMobile ? "100%" : 480}>
           {dogsLoading ? (
             // Display spinner inside the table body
             <Table.Row>
