@@ -68,7 +68,7 @@ const Search: React.FC = () => {
       breedFilter === "" || breedFilter === viealAllBreedsFilterLabel ? undefined : [breedFilter];
 
     dispatch(searchDogs(breeds, sortOrder, (currentPage - 1) * dogsPerPage));
-  }, [breedFilter, dispatch, sortOrder, currentPage]);
+  }, [breedFilter, dispatch, sortOrder, currentPage, viealAllBreedsFilterLabel]);
 
   const sortByAgeLabel = intl.formatMessage({ id: "SORT_BY_AGE_LABEL" });
   const sortByBreedAscendingLabel = intl.formatMessage({ id: "SORT_BY_BREED_ASCENDING_LABEL" });
