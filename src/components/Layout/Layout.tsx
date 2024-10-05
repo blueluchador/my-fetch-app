@@ -33,25 +33,32 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         padding={majorScale(2)}>
         {/* Container for Image and Text */}
         <Pane alignItems="center" display="flex">
-          {/* Image on the Left */}
-          <Image alt="App Logo" height={32} marginRight={majorScale(2)} src="/images/logo.png" />
-
-          {/* App Name */}
-          <Text fontWeight={500} size={600}>
-            <FormattedMessage id="APP_NAME" />
-          </Text>
+          {/* Home link */}
+          <Link href="/">
+            <Pane alignItems="center" display="flex">
+              <Image
+                alt="App Logo"
+                height={32}
+                marginRight={majorScale(1)}
+                src="/images/logo.png"
+              />
+              <Text fontWeight={500} size={600}>
+                <FormattedMessage id="APP_NAME" />
+              </Text>
+            </Pane>
+          </Link>
         </Pane>
 
         <Pane alignItems="center" display="flex">
           {/* Search Link */}
-          <Link href="/search" style={{ marginRight: majorScale(2), textDecoration: "none" }}>
+          <Link href="/search" style={{ marginRight: majorScale(4) }}>
             <Text fontWeight={500}>
               <FormattedMessage id="SEARCH_NAV_TEXT" />
             </Text>
           </Link>
 
           {/* Favorites Link */}
-          <Link href="/favorites" style={{ marginRight: majorScale(2), textDecoration: "none" }}>
+          <Link href="/favorites" style={{ marginRight: majorScale(4) }}>
             <Text fontWeight={500}>
               <FormattedMessage id="FAVORITES_NAV_TEXT" />
             </Text>
