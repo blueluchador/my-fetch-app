@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -55,8 +55,12 @@ const DogCard: React.FC<{ dog: Dog; forMatch?: boolean }> = ({ dog, forMatch }) 
       <Heading marginTop={8} size={600}>
         {dog.name}
       </Heading>
-      <Text>Breed: {dog.breed}</Text>
-      <Text>Age: {dog.age}</Text>
+      <Text>
+        <FormattedMessage id="DOG_BREED_CARD_LABEL" values={{ breed: dog.breed }} />
+      </Text>
+      <Text>
+        <FormattedMessage id="DOG_AGE_CARD_LABEL" values={{ age: dog.age }} />
+      </Text>
     </Card>
   );
 };
@@ -74,7 +78,9 @@ const DogGrid: React.FC = () => {
   return (
     <>
       {dogs.length === 0 ? (
-        <Text>No favorite dogs selected yet. You can add favorites from the search page.</Text>
+        <Text>
+          <FormattedMessage id="NO_FAVORITES_MESSAGE" />
+        </Text>
       ) : (
         <Pane
           display="grid"
@@ -94,6 +100,8 @@ const DogGrid: React.FC = () => {
 // Favorites component with conditional rendering for the Fetch Match button
 const Favorites: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+
+  const intl = useIntl();
 
   const [isShown, setIsShown] = useState(false);
 
@@ -117,12 +125,12 @@ const Favorites: React.FC = () => {
     <Pane margin="auto" width={800}>
       {/* Dog match dialog */}
       <Dialog
-        confirmLabel="OK"
+        confirmLabel={intl.formatMessage({ id: "DOG_MATCH_CONFIRM_LABEL" })}
         hasCancel={false}
         hasClose={!isDogMatchLoading}
         hasFooter={!isDogMatchLoading}
         isShown={isShown}
-        title="Your Dog Match"
+        title={intl.formatMessage({ id: "DOG_MATCH_DIALOG_TITLE" })}
         onCloseComplete={() => setIsShown(false)}>
         {isDogMatchLoading ? (
           <Pane alignItems="center" display="flex" justifyContent="center">

@@ -26,6 +26,13 @@ export const enUsMessages = {
   FAVORITES_COLUMN_LABEL: "Favorites",
   ZIP_CODE_COLUMN_LABEL: "Zip Code",
 
+  // Favorites page
+  DOG_AGE_CARD_LABEL: "Age: {age}",
+  DOG_BREED_CARD_LABEL: "Breed: {breed}",
+  DOG_MATCH_CONFIRM_LABEL: "OK",
+  DOG_MATCH_DIALOG_TITLE: "Your Dog Match",
+  NO_FAVORITES_MESSAGE: "No favorite dogs selected yet. You can add favorites from the search page.",
+
   // Login page
   LOGIN_BUTTON_TEXT: "Login",
   LOGIN_EMAIL_LABEL: "Email",
