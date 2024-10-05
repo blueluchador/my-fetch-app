@@ -1,9 +1,10 @@
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { useDispatch } from "react-redux";
-import { Button, Image, Link, majorScale, Pane, Text } from "evergreen-ui";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Image, Link, majorScale, Pane, Pill, Text } from "evergreen-ui";
 
 import { AppDispatch } from "../../redux";
+import { getFavoriteDogs } from "../../redux/selectors";
 import { logout } from "../../redux/thunks";
 
 // Define types for props
@@ -13,6 +14,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
+
+  const favoritesCount: number = useSelector(getFavoriteDogs).length;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -52,6 +55,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Text fontWeight={500}>
               <FormattedMessage id="FAVORITES_NAV_TEXT" />
             </Text>
+            {favoritesCount > 0 ? (
+              <Pill color="red" display="inline-flex" margin={8}>
+                {favoritesCount}
+              </Pill>
+            ) : (
+              <></>
+            )}
           </Link>
 
           {/* Logout Button */}
