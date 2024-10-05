@@ -6,7 +6,7 @@
 
 - **Issue #1**: Incompatibility of config and mocked store with deprecated AnyAction Type. [Link to Issue](https://github.com/blueluchador/my-fetch-app/issues/1)
 - **Issue #2**: Mobile devices unable to render content. [Link to Issue](https://github.com/blueluchador/my-fetch-app/issues/2)
-- **Issue #3**: Incompatibility of config and mocked store with deprecated AnyAction Type. [Link to Issue](hhttps://github.com/blueluchador/my-fetch-app/issues/3)
+- **Issue #3**: Ensure application accessibility and compatibility with screen readers. [Link to Issue](https://github.com/blueluchador/my-fetch-app/issues/3)
 
 ## Available Scripts
 
