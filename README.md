@@ -2,10 +2,11 @@
 
 [![Azure Static Web Apps CI/CD](https://github.com/blueluchador/my-fetch-app/actions/workflows/azure-static-web-apps-zealous-plant-041de2810.yml/badge.svg)](https://github.com/blueluchador/my-fetch-app/actions/workflows/azure-static-web-apps-zealous-plant-041de2810.yml)
 
-## To Do
+## Known Issues
 
-1. Setup project to automatically run Prettier using Husky (Git hook)
-1. Implemente XSS and CSRF to gaurd against attacks
+- **Issue #1**: Incompatibility of config and mocked store with deprecated AnyAction Type. [Link to Issue](https://github.com/blueluchador/my-fetch-app/issues/1)
+- **Issue #1**: Mobile devices unable to render content. [Link to Issue](https://github.com/blueluchador/my-fetch-app/issues/2)
+- **Issue #1**: Incompatibility of config and mocked store with deprecated AnyAction Type. [Link to Issue](hhttps://github.com/blueluchador/my-fetch-app/issues/3)
 
 ## Available Scripts
 
