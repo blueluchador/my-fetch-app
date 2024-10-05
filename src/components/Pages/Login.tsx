@@ -72,9 +72,9 @@ const Login: React.FC = () => {
           width="100%"
           onClick={handleLogin}>
           {isLoading ? (
-            <FormattedMessage defaultMessage="Logging in..." id="LOGIN_LOADING_TEXT" />
+            <FormattedMessage id="LOGIN_LOADING_TEXT" />
           ) : (
-            <FormattedMessage defaultMessage="Login" id="LOGIN_BUTTON_TEXT" />
+            <FormattedMessage id="LOGIN_BUTTON_TEXT" />
           )}
         </Button>
       </Pane>

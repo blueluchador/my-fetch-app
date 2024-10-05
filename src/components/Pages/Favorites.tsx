@@ -135,7 +135,9 @@ const Favorites: React.FC = () => {
         {isDogMatchLoading ? (
           <Pane alignItems="center" display="flex" justifyContent="center">
             <Spinner marginRight={8} size={24} />
-            <Text>Fetching dog match...</Text>
+            <Text>
+              <FormattedMessage id="DOG_MATCH_LOADING_MESSAGE" />
+            </Text>
           </Pane>
         ) : (
           <Pane alignItems="center" display="flex" flexDirection="column">
@@ -146,7 +148,9 @@ const Favorites: React.FC = () => {
               </Pane>
 
               <Pane marginLeft={16}>
-                <Text size={600}>Yay! We found a match!</Text>
+                <Text size={600}>
+                  <FormattedMessage id="DOG_MATCH_FOUND_MESSAGE" />
+                </Text>
               </Pane>
             </Pane>
 

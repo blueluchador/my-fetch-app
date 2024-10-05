@@ -31,7 +31,10 @@ export const enUsMessages = {
   DOG_BREED_CARD_LABEL: "Breed: {breed}",
   DOG_MATCH_CONFIRM_LABEL: "OK",
   DOG_MATCH_DIALOG_TITLE: "Your Dog Match",
-  NO_FAVORITES_MESSAGE: "No favorite dogs selected yet. You can add favorites from the search page.",
+  DOG_MATCH_FOUND_MESSAGE: "Yay! We found you a match!",
+  DOG_MATCH_LOADING_MESSAGE: "Fetching for a dog match...",
+  NO_FAVORITES_MESSAGE:
+    "No favorite dogs selected yet. You can add favorites from the search page.",
 
   // Login page
   LOGIN_BUTTON_TEXT: "Login",
