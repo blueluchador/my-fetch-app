@@ -58,4 +58,9 @@ export const enUsMessages = {
   LOGOUT_BUTTON_ARIA_LABEL: "Log out",
   MAIN_NAVIGATION_ARIA_LABEL: "Main navigation",
   SEARCH_LINK_ARIAL_LABEL: "Search",
+
+  // Login page accessibility
+  LOGIN_BUTTON_ARIA_LABEL: "Login",
+  LOGIN_EMAIL_ARIA_LABEL: "Enter your email",
+  LOGIN_NAME_ARIA_LABEL: "Enter your name",
 };

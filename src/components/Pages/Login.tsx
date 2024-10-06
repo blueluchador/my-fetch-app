@@ -39,12 +39,14 @@ const Login: React.FC = () => {
   return (
     <Pane
       alignItems="center"
+      aria-labelledby="login-heading"
       background="tint2"
       display="flex"
       height="100vh"
-      justifyContent="center">
-      <Pane background="white" borderRadius={8} elevation={3} padding={24} width={400}>
-        <Heading marginBottom={24} size={800} textAlign="center">
+      justifyContent="center"
+      role="main">
+      <Pane background="white" borderRadius={8} elevation={3} padding={24} role="form" width={400}>
+        <Heading id="login-heading" marginBottom={24} size={800} textAlign="center">
           <FormattedMessage id="APP_NAME" />
         </Heading>
 
@@ -53,6 +55,8 @@ const Login: React.FC = () => {
         </Heading>
 
         <TextInputField
+          aria-label={intl.formatMessage({ id: "LOGIN_NAME_LABEL" })}
+          aria-required="true"
           label={intl.formatMessage({ id: "LOGIN_NAME_LABEL" })}
           placeholder={intl.formatMessage({ id: "LOGIN_NAME_PLACEHOLDER" })}
           value={name}
@@ -60,6 +64,8 @@ const Login: React.FC = () => {
         />
 
         <TextInputField
+          aria-label={intl.formatMessage({ id: "LOGIN_EMAIL_LABEL" })}
+          aria-required="true"
           label={intl.formatMessage({ id: "LOGIN_EMAIL_LABEL" })}
           placeholder={intl.formatMessage({ id: "LOGIN_EMAIL_PLACEHOLDER" })}
           value={email}
@@ -68,6 +74,9 @@ const Login: React.FC = () => {
 
         <Button
           appearance="primary"
+          aria-busy={isLoading ? "true" : "false"}
+          aria-disabled={isLoading || !name || !isValidEmail(email)}
+          aria-label={intl.formatMessage({ id: "LOGIN_BUTTON_TEXT" })}
           disabled={!name || !isValidEmail(email)}
           width="100%"
           onClick={handleLogin}>
