@@ -49,4 +49,13 @@ export const enUsMessages = {
   BACK_HOME_BUTTON_TEXT: "Go Back to Home",
   PAGE_NOT_FOUND_TEXT: "Oops! We can't find that page.",
   PAGE_NOT_FOUND_TITLE: "404: Page Not Found",
+
+  // Layout accessibility
+  FAVORITES_LINK_ARIA_LABEL: "Favorites",
+  FAVORITES_PILL_ARIA_LABEL: "{count} favorite items",
+  FOOTER_ARIAL_LABEL: "Footer",
+  HOME_LINK_ARIA_LABEL: "Home",
+  LOGOUT_BUTTON_ARIA_LABEL: "Log out",
+  MAIN_NAVIGATION_ARIA_LABEL: "Main navigation",
+  SEARCH_LINK_ARIAL_LABEL: "Search",
 };
