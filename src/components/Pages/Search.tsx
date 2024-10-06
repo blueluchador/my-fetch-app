@@ -156,6 +156,7 @@ const Search: React.FC = () => {
         {/* Sort combobox */}
         <Pane>
           <Combobox
+            aria-label={intl.formatMessage({ id: "SORT_COMBOBOX_ARIA_LABEL" })}
             items={Object.values(sortOrderMap)}
             marginBottom={16}
             selectedItem={sortOrderMap[sortOrder]}
@@ -165,7 +166,7 @@ const Search: React.FC = () => {
       </Pane>
 
       {/* Dog list */}
-      <Table>
+      <Table aria-label={intl.formatMessage({ id: "DOG_LIST_TABLE_ARIA_LABEL" })}>
         <Table.Head>
           <Table.TextHeaderCell>
             <FormattedMessage id="AVATAR_COLUMN_LABEL" />
@@ -192,7 +193,11 @@ const Search: React.FC = () => {
             <Table.Row>
               <Table.TextCell gridColumn="1 / -1" textAlign="center">
                 <Pane alignItems="center" display="flex" justifyContent="center">
-                  <Spinner marginRight={8} size={24} />
+                  <Spinner
+                    aria-label={intl.formatMessage({ id: "DOG_LIST_LOADING_SPINNER_ARIA_LABEL" })}
+                    marginRight={8}
+                    size={24}
+                  />
                   Fetching dogs...
                 </Pane>
               </Table.TextCell>
@@ -209,6 +214,14 @@ const Search: React.FC = () => {
                 <Table.TextCell>{dog.zip_code}</Table.TextCell>
                 <Table.TextCell>
                   <HeartIcon
+                    aria-label={intl.formatMessage(
+                      {
+                        id: dogExists(dog.id)
+                          ? "REMOVE_FROM_FAVORITES_ARIA_LABEL"
+                          : "ADD_TO_FAVORITES_ARIA_LABEL",
+                      },
+                      { name: dog.name },
+                    )}
                     color={dogExists(dog.id) ? "danger" : "disabled"}
                     cursor="pointer"
                     size={18}
@@ -223,6 +236,10 @@ const Search: React.FC = () => {
 
       {/* Pagination */}
       <Pagination
+        aria-label={intl.formatMessage({
+          defaultMessage: "Dog list pagination",
+          id: "DOG_LIST_PAGINATION_ARIA_LABEL",
+        })}
         page={currentPage}
         totalPages={totalPages()}
         onNextPage={() => setCurrentPage(currentPage + 1)}

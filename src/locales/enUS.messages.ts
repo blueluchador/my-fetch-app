@@ -73,6 +73,12 @@ export const enUsMessages = {
   PAGE_NOT_FOUND_ARIAL_LABEL: "The requested page could not be found",
 
   // Search page accessibility
+  ADD_TO_FAVORITES_ARIA_LABEL: "Add {name} to favorites",
+  DOG_LIST_LOADING_SPINNER_ARIA_LABEL: "Loading dogs",
+  DOG_LIST_PAGINATION_ARIA_LABEL: "Dog list pagination",
+  DOG_LIST_TABLE_ARIA_LABEL: "Dog list",
+  REMOVE_FROM_FAVORITES_ARIA_LABEL: "Remove {name} from favorites",
+  SORT_COMBOBOX_ARIA_LABEL: "Sort combobox",
 
   // Card component accessibility
   DOG_CARD_ARIA_LABEL: "Dog card",
