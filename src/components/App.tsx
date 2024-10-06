@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Spinner } from "evergreen-ui";
@@ -11,8 +12,9 @@ import Layout from "./Layout";
 import { Favorites, Login, NotFound, Search } from "./Pages";
 
 const App: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const intl = useIntl();
 
+  const dispatch: AppDispatch = useDispatch();
   const isAuthenticated: boolean | null = useSelector(getIsAuthenticated);
 
   useEffect(() => {
@@ -27,13 +29,17 @@ const App: React.FC = () => {
   if (isAuthenticated === null) {
     return (
       <div
+        aria-busy="true"
+        aria-label={intl.formatMessage({ id: "LOADING_AUTH_STATUS_ARIA_LABEL" })}
+        aria-live="assertive"
+        role="alert"
         style={{
           alignItems: "center",
           display: "flex",
           height: "100vh",
           justifyContent: "center",
         }}>
-        <Spinner />
+        <Spinner aria-label={intl.formatMessage({ id: "LOADING_SPINNER_ARIA_LABEL" })} />
       </div>
     );
   }
@@ -73,7 +79,7 @@ const App: React.FC = () => {
           path="/favorites"
         />
 
-        {/* Redirect all unmatched routes to Login */}
+        {/* Redirect all unmatched routes to NotFound */}
         <Route element={<NotFound />} path="*" />
       </Routes>
     </Router>

@@ -67,4 +67,8 @@ export const enUsMessages = {
   // Not found page accessibility
   BACK_HOME_BUTTON_ARIA_LABEL: "Go back to the home page",
   PAGE_NOT_FOUND_ARIAL_LABEL: "The requested page could not be found",
+
+  // App component accessibility
+  LOADING_AUTH_STATUS_ARIA_LABEL: "Loading authentication status",
+  LOADING_SPINNER_ARIA_LABEL: "Loading spinner",
 };
