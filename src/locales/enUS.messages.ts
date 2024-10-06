@@ -50,6 +50,10 @@ export const enUsMessages = {
   PAGE_NOT_FOUND_TEXT: "Oops! We can't find that page.",
   PAGE_NOT_FOUND_TITLE: "404: Page Not Found",
 
+  // App component accessibility
+  LOADING_AUTH_STATUS_ARIA_LABEL: "Loading authentication status",
+  LOADING_SPINNER_ARIA_LABEL: "Loading spinner",
+
   // Layout accessibility
   FAVORITES_LINK_ARIA_LABEL: "Favorites",
   FAVORITES_PILL_ARIA_LABEL: "{count} favorite items",
@@ -68,7 +72,14 @@ export const enUsMessages = {
   BACK_HOME_BUTTON_ARIA_LABEL: "Go back to the home page",
   PAGE_NOT_FOUND_ARIAL_LABEL: "The requested page could not be found",
 
-  // App component accessibility
-  LOADING_AUTH_STATUS_ARIA_LABEL: "Loading authentication status",
-  LOADING_SPINNER_ARIA_LABEL: "Loading spinner",
+  // Search page accessibility
+
+  // Card component accessibility
+  DOG_CARD_ARIA_LABEL: "Dog card",
+  DOG_IMAGE_ALT_TEXT: "Dog image",
+  UNFAVORITE_BUTTON_ARIA_LABEL: "Unfavorite this dog",
+
+  // Favorites page accessibility
+  DOG_MATCH_DIALOG_ARIA_LABEL: "Dog match dialog",
+  DOG_MATCH_LOADING_SPINNER_ARIA_LABEL: "Loading dog match",
 };

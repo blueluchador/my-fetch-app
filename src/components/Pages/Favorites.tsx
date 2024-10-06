@@ -20,15 +20,16 @@ import { getDogMatch, getDogMatchLoading, getFavoriteDogs } from "../../redux/se
 import { loadFavorites, removeFromFavorites } from "../../redux/thunks";
 import { fetchDogMatch } from "../../redux/thunks/matchDog.thunks";
 
-// DogCard component that accepts a Dog object as a prop
 const DogCard: React.FC<{ dog: Dog; forMatch?: boolean }> = ({ dog, forMatch }) => {
   const dispatch: AppDispatch = useDispatch();
+  const intl = useIntl();
 
   const handleUnheartDog = (id: string) => dispatch(removeFromFavorites(id));
 
   return (
     <Card
       alignItems="center"
+      aria-label={intl.formatMessage({ id: "DOG_CARD_ARIA_LABEL" })}
       display="flex"
       elevation={forMatch ? 0 : 2}
       flexDirection="column"
@@ -36,22 +37,29 @@ const DogCard: React.FC<{ dog: Dog; forMatch?: boolean }> = ({ dog, forMatch }) 
       margin={16}
       padding={16}
       width={240}>
-      {/* Pane that contains the image and heart icon */}
       <Pane height={200} position="relative" width={200}>
-        {/* Image of the dog */}
-        <Image borderRadius={8} height={200} src={dog.img} width={200} />
+        <Image
+          alt={intl.formatMessage({ id: "DOG_IMAGE_ALT_TEXT" })}
+          borderRadius={8}
+          height={200}
+          src={dog.img}
+          width={200}
+        />
 
-        {/* Heart icon overlay */}
         {forMatch ? (
           <></>
         ) : (
           <Pane position="absolute" right={8} top={8}>
-            <IconButton icon={HeartIcon} intent="danger" onClick={() => handleUnheartDog(dog.id)} />
+            <IconButton
+              aria-label={intl.formatMessage({ id: "UNFAVORITE_BUTTON_ARIA_LABEL" })}
+              icon={HeartIcon}
+              intent="danger"
+              onClick={() => handleUnheartDog(dog.id)}
+            />
           </Pane>
         )}
       </Pane>
 
-      {/* Dog details */}
       <Heading marginTop={8} size={600}>
         {dog.name}
       </Heading>
@@ -65,7 +73,6 @@ const DogCard: React.FC<{ dog: Dog; forMatch?: boolean }> = ({ dog, forMatch }) 
   );
 };
 
-// DogGrid component that maps over the dog data and displays it in a grid
 const DogGrid: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
@@ -97,10 +104,8 @@ const DogGrid: React.FC = () => {
   );
 };
 
-// Favorites component with conditional rendering for the Fetch Match button
 const Favorites: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-
   const intl = useIntl();
 
   const [isShown, setIsShown] = useState(false);
@@ -123,8 +128,8 @@ const Favorites: React.FC = () => {
 
   return (
     <Pane margin="auto" width={800}>
-      {/* Dog match dialog */}
       <Dialog
+        aria-label={intl.formatMessage({ id: "DOG_MATCH_DIALOG_ARIA_LABEL" })}
         confirmLabel={intl.formatMessage({ id: "DOG_MATCH_CONFIRM_LABEL" })}
         hasCancel={false}
         hasClose={!isDogMatchLoading}
@@ -134,27 +139,27 @@ const Favorites: React.FC = () => {
         onCloseComplete={() => setIsShown(false)}>
         {isDogMatchLoading ? (
           <Pane alignItems="center" display="flex" justifyContent="center">
-            <Spinner marginRight={8} size={24} />
+            <Spinner
+              aria-label={intl.formatMessage({ id: "DOG_MATCH_LOADING_SPINNER_ARIA_LABEL" })}
+              marginRight={8}
+              size={24}
+            />
             <Text>
               <FormattedMessage id="DOG_MATCH_LOADING_MESSAGE" />
             </Text>
           </Pane>
         ) : (
           <Pane alignItems="center" display="flex" flexDirection="column">
-            {/* Flex container for image and text side by side */}
             <Pane alignItems="center" display="flex" justifyContent="center">
               <Pane>
                 <Image alt="App Logo" src="/images/logo.png" />
               </Pane>
-
               <Pane marginLeft={16}>
                 <Text size={600}>
                   <FormattedMessage id="DOG_MATCH_FOUND_MESSAGE" />
                 </Text>
               </Pane>
             </Pane>
-
-            {/* DogCard below the image and text */}
             <Pane marginTop={16}>
               <DogCard dog={getMatchedDog()} forMatch={true} />
             </Pane>
@@ -166,7 +171,6 @@ const Favorites: React.FC = () => {
         <FormattedMessage id="FAVORITES_PAGE_HEADING" />
       </Heading>
 
-      {/* Conditionally render the Fetch Match button if there are favorite dogs */}
       {dogs.length > 0 && (
         <Button appearance="primary" marginBottom={16} onClick={handleFetchMatch}>
           Fetch Match
