@@ -63,4 +63,8 @@ export const enUsMessages = {
   LOGIN_BUTTON_ARIA_LABEL: "Login",
   LOGIN_EMAIL_ARIA_LABEL: "Enter your email",
   LOGIN_NAME_ARIA_LABEL: "Enter your name",
+
+  // Not found page accessibility
+  BACK_HOME_BUTTON_ARIA_LABEL: "Go back to the home page",
+  PAGE_NOT_FOUND_ARIAL_LABEL: "The requested page could not be found",
 };
