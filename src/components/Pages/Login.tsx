@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         </Heading>
 
         <TextInputField
-          aria-label={intl.formatMessage({ id: "LOGIN_NAME_LABEL" })}
+          aria-label={intl.formatMessage({ id: "LOGIN_NAME_ARIA_LABEL" })}
           aria-required="true"
           label={intl.formatMessage({ id: "LOGIN_NAME_LABEL" })}
           placeholder={intl.formatMessage({ id: "LOGIN_NAME_PLACEHOLDER" })}
@@ -64,7 +64,7 @@ const Login: React.FC = () => {
         />
 
         <TextInputField
-          aria-label={intl.formatMessage({ id: "LOGIN_EMAIL_LABEL" })}
+          aria-label={intl.formatMessage({ id: "LOGIN_EMAIL_ARIA_LABEL" })}
           aria-required="true"
           label={intl.formatMessage({ id: "LOGIN_EMAIL_LABEL" })}
           placeholder={intl.formatMessage({ id: "LOGIN_EMAIL_PLACEHOLDER" })}
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
           appearance="primary"
           aria-busy={isLoading ? "true" : "false"}
           aria-disabled={isLoading || !name || !isValidEmail(email)}
-          aria-label={intl.formatMessage({ id: "LOGIN_BUTTON_TEXT" })}
+          aria-label={intl.formatMessage({ id: "LOGIN_BUTTON_ARIA_LABEL" })}
           disabled={!name || !isValidEmail(email)}
           width="100%"
           onClick={handleLogin}>
