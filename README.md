@@ -27,7 +27,7 @@ Launches the test runner in the interactive watch mode.
 
 Runs the tests once.
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in the interactive watch mode.
 
 ### `npm run lint`
 
